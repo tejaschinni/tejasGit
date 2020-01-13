@@ -1,138 +1,372 @@
-// Copyright 2014 The Flutter Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 import 'package:flutter/material.dart';
-
-
-
-class IconsDemo extends StatefulWidget {
-  static const String routeName = '/material/icons';
-
+main()=>runApp(MyApp());
+class MyApp extends StatefulWidget {
   @override
-  IconsDemoState createState() => IconsDemoState();
+  _MyAppState createState() => _MyAppState();
 }
 
-class IconsDemoState extends State<IconsDemo> {
-  static final List<MaterialColor> iconColors = <MaterialColor>[
-    Colors.red,
-    Colors.pink,
-    Colors.purple,
-    Colors.deepPurple,
-    Colors.indigo,
-    Colors.blue,
-    Colors.lightBlue,
-    Colors.cyan,
-    Colors.teal,
-    Colors.green,
-    Colors.lightGreen,
-    Colors.lime,
-    Colors.yellow,
-    Colors.amber,
-    Colors.orange,
-    Colors.deepOrange,
-    Colors.brown,
-    Colors.grey,
-    Colors.blueGrey,
-  ];
-
-  int iconColorIndex = 8; // teal
-
-  Color get iconColor => iconColors[iconColorIndex];
-
-  void handleIconButtonPress() {
-    setState(() {
-      iconColorIndex = (iconColorIndex + 1) % iconColors.length;
-    });
-  }
-
+class _MyAppState extends State<MyApp> {
+  Color one, two, three, four, five, six, seven,eight, nine;
+  bool flag=false;
   @override
+
+  
+  void initState() { 
+    super.initState();
+    refresh();
+  }
+@override
+
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Icons'),
-       
-      ),
-      body: IconTheme(
-        data: IconThemeData(color: iconColor),
-        child: SafeArea(
-          top: false,
-          bottom: false,
-          child: Scrollbar(
-            child: ListView(
-              padding: const EdgeInsets.all(24.0),
-              children: <Widget>[
-                _IconsDemoCard(handleIconButtonPress, Icons.face), // direction-agnostic icon
-                const SizedBox(height: 24.0),
-                _IconsDemoCard(handleIconButtonPress, Icons.battery_unknown), // direction-aware icon
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _IconsDemoCard extends StatelessWidget {
-  const _IconsDemoCard(this.handleIconButtonPress, this.icon);
-
-  final VoidCallback handleIconButtonPress;
-  final IconData icon;
-
-  Widget _buildIconButton(double iconSize, IconData icon, bool enabled) {
-    return IconButton(
-      icon: Icon(icon),
-      iconSize: iconSize,
-      tooltip: "${enabled ? 'Enabled' : 'Disabled'} icon button",
-      onPressed: enabled ? handleIconButtonPress : null,
-    );
-  }
-
-  Widget _centeredText(String label) =>
-    Padding(
-      // Match the default padding of IconButton.
-      padding: const EdgeInsets.all(8.0),
-      child: Text(label, textAlign: TextAlign.center),
-    );
-
-  TableRow _buildIconRow(double size) {
-    return TableRow(
-      children: <Widget> [
-        _centeredText(size.floor().toString()),
-        _buildIconButton(size, icon, true),
-        _buildIconButton(size, icon, false),
-      ],
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    final TextStyle textStyle = theme.textTheme.subhead.copyWith(color: theme.textTheme.caption.color);
-    return Card(
-      child: DefaultTextStyle(
-        style: textStyle,
-        child: Semantics(
-          explicitChildNodes: true,
-          child: Table(
-            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-            children: <TableRow> [
-              TableRow(
-                children: <Widget> [
-                  _centeredText('Size'),
-                  _centeredText('Enabled'),
-                  _centeredText('Disabled'),
-                ]
+    return MaterialApp(
+      home: Scaffold(
+        body: Column(
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                color: Colors.orange,
+                child: Center(
+                  child: Text('Tik Tok Toe',style: TextStyle(
+                    fontSize: 40,
+                  ),),
+                ),
               ),
-              _buildIconRow(18.0),
-              _buildIconRow(24.0),
-              _buildIconRow(36.0),
-              _buildIconRow(48.0),
-            ],
-          ),
+            ),
+            Expanded(flex: 5,
+              child: Column(
+          children: <Widget>[
+            Expanded(
+              child: Row(
+          children: <Widget>[
+            Expanded(
+              child:InkWell(
+                onTap: (){
+                  setState(() {
+                    if(one==Colors.white)
+                    {
+                    one=flag?Colors.red:Colors.brown;
+                    flag=!flag;
+                    check();
+                    }
+                  });
+                },
+              
+              child: Container(
+                decoration: BoxDecoration(
+                  color:one,
+                  border: Border.all(
+                    color: Colors.pink,
+                  )
+                ),
+              ),
+              ),
+            ),
+             Expanded(
+              child:InkWell(
+                onTap: (){
+                  setState(() {
+                    if(two==Colors.white)
+                    {
+                      two=flag?Colors.red:Colors.brown;
+                    flag=!flag;
+                     check();
+                    }
+                  });
+                },
+              
+              child: Container(
+                decoration: BoxDecoration(
+                  color:two,
+                  border: Border.all(
+                    color: Colors.pink,
+                  )
+                ),
+              ),
+              ),
+            ),
+             Expanded(
+              child:InkWell(
+                onTap: (){
+                  setState(() {
+                    if(three==Colors.white)
+                    {
+                      three=flag?Colors.red:Colors.brown;
+                    flag=!flag;
+                     check();
+                    }
+                  });
+                },
+              
+              child: Container(
+                decoration: BoxDecoration(
+                  color:three,
+                  border: Border.all(
+                    color: Colors.pink,
+                  )
+                ),
+              ),
+              ),
+            ),
+          ],
         ),
-      ),
+            ),
+            Expanded(
+              child: Row(
+          children: <Widget>[
+             Expanded(
+              child:InkWell(
+                onTap: (){
+                  setState(() {
+                   if(four==Colors.white)
+                    {
+                      four=flag?Colors.red:Colors.brown;
+                    flag=!flag;
+                     check();
+                    }
+                  });
+                },
+              
+              child: Container(
+                decoration: BoxDecoration(
+                  color:four,
+                  border: Border.all(
+                    color: Colors.pink,
+                  )
+                ),
+              ),
+              ),
+            ),
+            Expanded(
+              child:InkWell(
+                onTap: (){
+                  setState(() {
+                   if(five==Colors.white)
+                    {
+                      five=flag?Colors.red:Colors.brown;
+                    flag=!flag;
+                     check();
+                    }
+                  });
+                },
+              
+              child: Container(
+                decoration: BoxDecoration(
+                  color:five,
+                  border: Border.all(
+                    color: Colors.pink,
+                  )
+                ),
+              ),
+              ),
+            ),
+            Expanded(
+              child:InkWell(
+                onTap: (){
+                  setState(() {
+                   if(six==Colors.white)
+                    {
+                      six=flag?Colors.red:Colors.brown;
+                    flag=!flag;
+                     check();
+                    }
+                  });
+                },
+              
+              child: Container(
+                decoration: BoxDecoration(
+                  color:six,
+                  border: Border.all(
+                    color: Colors.pink,
+                  )
+                ),
+              ),
+              ),
+            ),
+          ],
+        ),
+            ),
+            Expanded(
+              child: Row(
+          children: <Widget>[
+             Expanded(
+              child:InkWell(
+                onTap: (){
+                  setState(() {
+                   if(seven==Colors.white)
+                    {
+                      seven=flag?Colors.red:Colors.brown;
+                    flag=!flag;
+                     check();
+                    }
+                  });
+                },
+              
+              child: Container(
+                decoration: BoxDecoration(
+                  color:seven,
+                  border: Border.all(
+                    color: Colors.pink,
+                  )
+                ),
+              ),
+              ),
+            ),
+             Expanded(
+              child:InkWell(
+                onTap: (){
+                  setState(() {
+                   if(eight==Colors.white)
+                    {
+                      eight=flag?Colors.red:Colors.brown;
+                    flag=!flag;
+                     check();
+                    }
+                  });
+                },
+              
+              child: Container(
+                decoration: BoxDecoration(
+                  color:eight,
+                  border: Border.all(
+                    color: Colors.pink,
+                  )
+                ),
+              ),
+              ),
+            ),
+             Expanded(
+              child:InkWell(
+                onTap: (){
+                  setState(() {
+                   if(nine==Colors.white)
+                    {
+                      nine=flag?Colors.red:Colors.brown;
+                    flag=!flag;
+                     check();
+                    }
+                  });
+                },
+              
+              child: Container(
+                decoration: BoxDecoration(
+                  color:nine,
+                  border: Border.all(
+                    color: Colors.pink,
+                  )
+                ),
+              ),
+              ),
+            ),
+          ],
+        ),
+            ),
+          ],
+        ),
+            ),
+            Expanded(
+              child: Container(
+                color:Colors.green,
+                child: Center(
+                  child: RaisedButton(
+                    child: Text('refresh'),
+                    onPressed: (){
+                      refresh();
+                    },
+
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),  
     );
   }
+  refresh(){
+    setState(() {
+      one=Colors.white;
+      two=Colors.white;
+      three=Colors.white;
+      four=Colors.white;
+      five=Colors.white;
+      six=Colors.white;
+      seven=Colors.white;
+      eight=Colors.white;
+      nine=Colors.white;
+    });
+
+  }
+  void check(){
+
+    if(one==Colors.brown && five==Colors.brown && nine==Colors.brown)
+    {
+       print('chicken dinner');
+    }
+    else if(one==Colors.orange && five==Colors.orange && nine==Colors.orange)
+    {
+       print('chicken dinner');
+    }
+    else if(three==Colors.brown && five==Colors.brown && seven==Colors.brown)
+    {
+       print('chicken dinner');
+    }
+    else if(three==Colors.orange && five==Colors.orange && seven==Colors.orange)
+    {
+       print('chicken dinner');
+    }
+    else if(one==Colors.brown && four==Colors.brown && seven==Colors.brown)
+    {
+       print('chicken dinner');
+    }
+    else if(one==Colors.orange && four==Colors.orange && seven==Colors.orange)
+    {
+       print('chicken dinner');
+    }
+    else if(two==Colors.brown && five==Colors.brown && eight==Colors.brown)
+    {
+       print('chicken dinner');
+    }
+    else if(two==Colors.orange && five==Colors.orange && eight==Colors.orange)
+    {
+       print('chicken dinner');
+    }
+
+    else if(three==Colors.brown && six==Colors.brown && nine==Colors.brown)
+    {
+       print('chicken dinner');
+    }
+    else if(three==Colors.orange && six==Colors.orange && nine==Colors.orange)
+    {
+       print('chicken dinner');
+    }
+
+    else if(one==Colors.brown && two==Colors.brown && three==Colors.brown)
+    {
+       print('chicken dinner');
+    }
+    else if(one==Colors.orange && two==Colors.orange && three==Colors.orange)
+    {
+       print('chicken dinner');
+    }
+
+    else if(four==Colors.brown && five==Colors.brown && six==Colors.brown)
+    {
+       print('chicken dinner');
+    }
+    else if(four==Colors.orange && five==Colors.orange && six==Colors.orange)
+    {
+       print('chicken dinner');
+    }
+
+    else if(seven==Colors.brown && eight==Colors.brown && nine==Colors.brown)
+    {
+       print('chicken dinner');
+    }
+    else if(seven==Colors.orange && eight==Colors.orange && nine==Colors.orange)
+    {
+       print('chicken dinner');
+    }
+    print('.');
+  }
+  
 }
