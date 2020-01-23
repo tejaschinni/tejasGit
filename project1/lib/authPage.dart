@@ -24,6 +24,7 @@ class _AuthPageState extends State<AuthPage> {
       
     });
     _googleSignIn.signInSilently();
+    
   }
 
   Future<void> _handleSignIn() async {
@@ -45,7 +46,7 @@ class _AuthPageState extends State<AuthPage> {
           image: DecorationImage(
             colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.4), BlendMode.hardLight),
               image: AssetImage(
-                'assets/nature.jpg',
+                'assets/wallpaper.jpg',
               ),
               fit: BoxFit.fill)),
       child: Center(

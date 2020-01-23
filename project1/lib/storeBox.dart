@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:project1/authPage.dart';
+import 'package:project1/demo/demoPage.dart';
 
 class StoreBoxPage extends StatefulWidget {
   @override
@@ -10,8 +12,21 @@ class _StoreBoxPageState extends State<StoreBoxPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomAppBar(
+        child: InkWell(
+          onTap: (){
+          },
+          child: Container(
+            height: 40,
+            color: Colors.green,
+          child: Center(child: Text("Prossed to Continue",textAlign: TextAlign.center, style: TextStyle(fontSize: 15),)),
+          
+        ),
+        )
+      ),
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
-        child: ListView(
+        child: Stack(
           children: <Widget>[
             ClipPath(
               child: Container(
@@ -27,47 +42,59 @@ class _StoreBoxPageState extends State<StoreBoxPage> {
               clipper: BottomWaveClipper(),
             ),
             Container(
-              alignment: Alignment.center,
-              child: CircleAvatar(
-                maxRadius: 70,
-                backgroundImage: AssetImage('assets/wallpaper.jpg'),
+              margin: EdgeInsets.only(top: 150),
+              child: Container(
+                alignment: Alignment.topCenter,
+                child: CircleAvatar(
+                  maxRadius: 70,
+                  backgroundImage: AssetImage('assets/wallpaper.jpg'),
+                ),
               ),
             ),
             Container(
-              margin: EdgeInsets.all(10),
-              child: TextField(
-                decoration: InputDecoration(hintText: '*Name Of Shop'),
+              padding: EdgeInsets.only(top: 170),
+              child: ListView(
+                //mainAxisAlignment: MainAxisAlignment.center,
+                padding: EdgeInsets.only(top: 140),
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    child: TextField(
+                      decoration: InputDecoration(hintText: '*Name Of Shop'),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    child: TextField(
+                      decoration: InputDecoration(hintText: '*Shop Owner Name'),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    child: TextField(
+                      decoration: InputDecoration(hintText: '*Shop Address'),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    child: TextField(
+                      decoration: InputDecoration(hintText: '*Shop Phone No.'),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    child: TextField(
+                      decoration:
+                          InputDecoration(hintText: '*Shopact license no.'),
+                    ),
+                  ),
+                ],
               ),
             ),
-            Container(
-              margin: EdgeInsets.all(10),
-              child: TextField(
-                decoration: InputDecoration(hintText: '*Shop Owner Name'),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.all(10),
-              child: TextField(
-                decoration: InputDecoration(hintText: '*Shop Address'),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.all(10),
-              child: TextField(
-                decoration: InputDecoration(hintText: '*Shop Phone No.'),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.all(10),
-              child: TextField(
-                decoration: InputDecoration(hintText: '*Shopact license no.'),
-              ),
-            ),
-            InkWell(
-              
-            )
+            
           ],
         ),
+        
       ),
     );
   }
