@@ -1,35 +1,89 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:project1/constant.dart';
+import 'package:project1/customerList.dart';
+import 'package:project1/demo/menuIcons.dart';
+import 'package:project1/orderPage.dart';
 
 class DashBoardPage extends StatefulWidget {
+  final Function handleSignOut;
+  final GoogleSignInAccount _currentUser;
+  DashBoardPage(this.handleSignOut,this._currentUser);
   @override
   _DashBoardPageState createState() => _DashBoardPageState();
 }
 
 class _DashBoardPageState extends State<DashBoardPage> {
+  final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
+  FirebaseUser user;
+  String photoUrl;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    cFireBaseAuth.currentUser().then((user)=>setState((){
+      this.user=user;
+      if(photoUrl != null){
+        photoUrl = user.photoUrl;
+      }
+      else{
+        photoUrl = "assets/customer.jpg";
+      }
+    }));
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldkey,
       appBar: AppBar(
         backgroundColor: Colors.green,
         actions: <Widget>[
           Container(
-            margin: EdgeInsets.all(10),
-            width: 35.0,
-             height: 70.0,
-            decoration: BoxDecoration(
-               color: const Color(0xff7c94b6),
-               image:  DecorationImage(
-                 image:  AssetImage('assets/customer.jpg'),
-                 fit: BoxFit.cover,
-               ),
-               borderRadius:  BorderRadius.all( Radius.circular(50.0)),
-               border:  Border.all(
-                 color: Colors.white,
-                 width: 2.0,
-               ),
-             )
-          )
+              margin: EdgeInsets.all(10),
+              width: 35.0,
+              height: 70.0,
+              decoration: BoxDecoration(
+                color: const Color(0xff7c94b6),
+                image: DecorationImage(
+                  image: NetworkImage(photoUrl),
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                border: Border.all(
+                  color: Colors.white,
+                  width: 2.0,
+                ),
+              ))
         ],
+        leading: IconButton(
+          icon: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                ClipPath(
+                  child: Container(
+                    height: 8,
+                    color: Colors.white,
+                  ),
+                  clipper: DawerI1(),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                ClipPath(
+                  child: Container(
+                    height: 8,
+                    color: Colors.white,
+                  ),
+                  clipper: DawerI2(),
+                ),
+              ],
+            ),
+          ),
+          onPressed: () => _scaffoldkey.currentState.openDrawer(),
+        ),
       ),
       drawer: SafeArea(
         child: Theme(
@@ -141,52 +195,70 @@ class _DashBoardPageState extends State<DashBoardPage> {
             ),
           ),
           Expanded(
-            child: Container(
-              margin: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      colorFilter: ColorFilter.mode(
-                          Colors.black.withOpacity(0.4), BlendMode.hardLight),
-                      image: AssetImage(
-                        'assets/customer.jpg',
+            child: InkWell(
+              onTap: () {
+                setState(() {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CustomerListPage(widget.handleSignOut,widget._currentUser)));
+                });
+              },
+              child: Container(
+                margin: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        colorFilter: ColorFilter.mode(
+                            Colors.black.withOpacity(0.4), BlendMode.hardLight),
+                        image: AssetImage(
+                          'assets/customer.jpg',
+                        ),
+                        fit: BoxFit.fill)),
+                child: Stack(
+                  children: <Widget>[
+                    Positioned(
+                      left: 100,
+                      top: 100,
+                      child: Text(
+                        'CUSTOMER LIST',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
-                      fit: BoxFit.fill)),
-              child: Stack(
-                children: <Widget>[
-                  Positioned(
-                    left: 100,
-                    top: 100,
-                    child: Text(
-                      'CUSTOMER LIST',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
           Expanded(
-            child: Container(
-              margin: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      colorFilter: ColorFilter.mode(
-                          Colors.black.withOpacity(0.4), BlendMode.hardLight),
-                      image: AssetImage(
-                        'assets/order.jpg',
+            child: InkWell(
+              onTap: () {
+                setState(() {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => OrderPage(widget.handleSignOut,widget._currentUser)));
+                });
+              },
+              child: Container(
+                margin: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        colorFilter: ColorFilter.mode(
+                            Colors.black.withOpacity(0.4), BlendMode.hardLight),
+                        image: AssetImage(
+                          'assets/order.jpg',
+                        ),
+                        fit: BoxFit.fill)),
+                child: Stack(
+                  children: <Widget>[
+                    Positioned(
+                      left: 150,
+                      top: 100,
+                      child: Text(
+                        'ORDERS',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
-                      fit: BoxFit.fill)),
-              child: Stack(
-                children: <Widget>[
-                  Positioned(
-                    left: 150,
-                    top: 100,
-                    child: Text(
-                      'ORDERS',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -194,4 +266,40 @@ class _DashBoardPageState extends State<DashBoardPage> {
       ),
     );
   }
+}
+
+class DawerI1 extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = new Path();
+    path.lineTo(size.width / 2, 0);
+    path.lineTo(
+      size.width / 2,
+      size.height,
+    );
+    path.lineTo(0, size.height);
+    path.close();
+
+    return path;
+  }
+
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
+class DawerI2 extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = new Path();
+    path.lineTo(size.width / 3, 0);
+    path.lineTo(
+      size.width / 4,
+      size.height,
+    );
+    path.lineTo(0, size.height);
+    path.close();
+
+    return path;
+  }
+
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }

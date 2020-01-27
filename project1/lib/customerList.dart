@@ -2,27 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project1/dashBoardPage.dart';
 
-class OrderPage extends StatefulWidget {
+class CustomerListPage extends StatefulWidget {
   final Function handleSignOut;
   final GoogleSignInAccount _currentUser;
-  OrderPage(this.handleSignOut,this._currentUser);
+  CustomerListPage(this.handleSignOut,this._currentUser);
   @override
-  _OrderPageState createState() => _OrderPageState();
+  _CustomerListPageState createState() => _CustomerListPageState();
 }
 
-class _OrderPageState extends State<OrderPage> {
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
+class _CustomerListPageState extends State<CustomerListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green,
-        title: Text('Order'),
+        title: Text('Customer List'),
         actions: <Widget>[
           Container(
             margin: EdgeInsets.all(10),
@@ -64,7 +58,7 @@ class _OrderPageState extends State<OrderPage> {
                             'Home',
                             style: TextStyle(color: Colors.white),
                           ),
-                          onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage(widget.handleSignOut,widget._currentUser))),
+                          onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage(widget.handleSignOut, widget._currentUser))),
                         ),
                         ListTile(
                           leading: Icon(Icons.person, color: Colors.white),
@@ -72,6 +66,7 @@ class _OrderPageState extends State<OrderPage> {
                             'Profile',
                             style: TextStyle(color: Colors.white),
                           ),
+                           onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage(widget.handleSignOut, widget._currentUser))),
                         ),
                         ListTile(
                           leading: Icon(Icons.search, color: Colors.white),
@@ -79,6 +74,7 @@ class _OrderPageState extends State<OrderPage> {
                             'Search',
                             style: TextStyle(color: Colors.white),
                           ),
+                           onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage(widget.handleSignOut, widget._currentUser))),
                         ),
                         ListTile(
                           leading: Icon(Icons.history, color: Colors.white),
@@ -86,6 +82,7 @@ class _OrderPageState extends State<OrderPage> {
                             'History',
                             style: TextStyle(color: Colors.white),
                           ),
+                           onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage(widget.handleSignOut, widget._currentUser))),
                         ),
                         ListTile(
                           leading: Icon(Icons.payment, color: Colors.white),
@@ -93,6 +90,7 @@ class _OrderPageState extends State<OrderPage> {
                             'Payment',
                             style: TextStyle(color: Colors.white),
                           ),
+                           onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage(widget.handleSignOut, widget._currentUser))),
                         ),
                         ListTile(
                           leading: Icon(
@@ -103,6 +101,7 @@ class _OrderPageState extends State<OrderPage> {
                             'Setting',
                             style: TextStyle(color: Colors.white),
                           ),
+                           onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage(widget.handleSignOut, widget._currentUser))),
                         ),
                       ],
                     ),
@@ -134,19 +133,16 @@ class _OrderPageState extends State<OrderPage> {
                   subtitle: Text('Mahesh Socity,Bibawadi pune'),
                   trailing: Container(
                     height: 25,
-                    width: 69,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.green,
-                    ),
-                    child: Center(child: Text('view List',)),
+                    width: 69,                    
+                    child: Center(child: Icon(Icons.arrow_forward_ios)),
                   ),
+                  onTap: (){},
                 ),
               )
             ],
           ),
         ),
-      ),
+      ),      
     );
   }
 }
