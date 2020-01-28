@@ -27,8 +27,8 @@ class _AuthPageState extends State<AuthPage> {
     });
     _googleSignIn.signInSilently();
     if (_currentUser != null) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => DashBoardPage(_handleSignOut,_currentUser)));
+      // Navigator.pushReplacement(
+      //     context, MaterialPageRoute(builder: (context) => DashBoardPage(_handleSignOut,_currentUser)));
     } else {
       print('Log IN Failed');
     }
@@ -39,10 +39,10 @@ class _AuthPageState extends State<AuthPage> {
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;
 
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => DashBoardPage(_handleSignOut, _currentUser)));
+    // Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (context) => DashBoardPage(_handleSignOut, _currentUser)));
 
     final AuthCredential credential = GoogleAuthProvider.getCredential(
       accessToken: googleAuth.accessToken,

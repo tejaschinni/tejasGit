@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project1/constant.dart';
 import 'package:project1/customerList.dart';
+import 'package:project1/demo/demoPage.dart';
 import 'package:project1/demo/menuIcons.dart';
+import 'package:project1/listOfItemPage.dart';
 import 'package:project1/orderPage.dart';
 
 class DashBoardPage extends StatefulWidget {
-  final Function handleSignOut;
-  final GoogleSignInAccount _currentUser;
-  DashBoardPage(this.handleSignOut,this._currentUser);
+  // final Function handleSignOut;
+  // final GoogleSignInAccount _currentUser;
+  // DashBoardPage(this.handleSignOut,this._currentUser);
   @override
   _DashBoardPageState createState() => _DashBoardPageState();
 }
@@ -17,22 +19,23 @@ class DashBoardPage extends StatefulWidget {
 class _DashBoardPageState extends State<DashBoardPage> {
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   FirebaseUser user;
-  String photoUrl;
+  // String photoUrl = "assets/customer.jpg";
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    cFireBaseAuth.currentUser().then((user)=>setState((){
-      this.user=user;
-      if(photoUrl != null){
-        photoUrl = user.photoUrl;
-      }
-      else{
-        photoUrl = "assets/customer.jpg";
-      }
-    }));
+    cFireBaseAuth.currentUser().then((user) => setState(() {
+          this.user = user;
+          // if(photoUrl != null){
+          //   photoUrl = user.photoUrl;
+          // }
+          // else{
+          //   photoUrl ;
+          // }
+        }));
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +50,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
               decoration: BoxDecoration(
                 color: const Color(0xff7c94b6),
                 image: DecorationImage(
-                  image: NetworkImage(photoUrl),
+                  image: AssetImage('assets/customer.jpg'),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.all(Radius.circular(50.0)),
@@ -58,30 +61,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
               ))
         ],
         leading: IconButton(
-          icon: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                ClipPath(
-                  child: Container(
-                    height: 8,
-                    color: Colors.white,
-                  ),
-                  clipper: DawerI1(),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                ClipPath(
-                  child: Container(
-                    height: 8,
-                    color: Colors.white,
-                  ),
-                  clipper: DawerI2(),
-                ),
-              ],
-            ),
-          ),
+          icon: MenuIconsPage(),
           onPressed: () => _scaffoldkey.currentState.openDrawer(),
         ),
       ),
@@ -157,6 +137,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             'Setting',
                             style: TextStyle(color: Colors.white),
                           ),
+                          // onTap: () => Navigator.push(context, MaterialPageRoute(builder:  (context)=>DemoPage(widget.handleSignOut,widget._currentUser))),
                         ),
                       ],
                     ),
@@ -170,27 +151,37 @@ class _DashBoardPageState extends State<DashBoardPage> {
       body: Column(
         children: <Widget>[
           Expanded(
-            child: Container(
-              margin: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      colorFilter: ColorFilter.mode(
-                          Colors.black.withOpacity(0.4), BlendMode.hardLight),
-                      image: AssetImage(
-                        'assets/grocerylist.jpg',
+            child: InkWell(
+              onTap: (){
+                setState(() {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ListOfItemPage()));
+                });
+              },
+              child: Container(
+                margin: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        colorFilter: ColorFilter.mode(
+                            Colors.black.withOpacity(0.4), BlendMode.hardLight),
+                        image: AssetImage(
+                          'assets/grocerylist.jpg',
+                        ),
+                        fit: BoxFit.fill)),
+                child: Stack(
+                  children: <Widget>[
+                    Positioned(
+                      left: 100,
+                      top: 100,
+                      child: Text(
+                        'LIST OF ITEMS',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
-                      fit: BoxFit.fill)),
-              child: Stack(
-                children: <Widget>[
-                  Positioned(
-                    left: 100,
-                    top: 100,
-                    child: Text(
-                      'LIST OF ITEMS',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -201,7 +192,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => CustomerListPage(widget.handleSignOut,widget._currentUser)));
+                          builder: (context) => CustomerListPage()));
                 });
               },
               child: Container(
@@ -234,7 +225,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
               onTap: () {
                 setState(() {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => OrderPage(widget.handleSignOut,widget._currentUser)));
+                      MaterialPageRoute(builder: (context) => OrderPage()));
                 });
               },
               child: Container(

@@ -1,28 +1,106 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:project1/customerDatatype.dart';
 import 'package:project1/dashBoardPage.dart';
+import 'package:project1/demo/menuIcons.dart';
 
 class CustomerListPage extends StatefulWidget {
-  final Function handleSignOut;
-  final GoogleSignInAccount _currentUser;
-  CustomerListPage(this.handleSignOut,this._currentUser);
+  // final Function handleSignOut;
+  // final GoogleSignInAccount _currentUser;
+  // CustomerListPage(this.handleSignOut,this._currentUser);
   @override
   _CustomerListPageState createState() => _CustomerListPageState();
 }
 
 class _CustomerListPageState extends State<CustomerListPage> {
+  final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
+  List<CustomerDataType> customerList = List();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    customerList.add(CustomerDataType(
+        id: 1,
+        name: 'Tejas Chinni',
+        address: 'Vit College,Bibvewadi',
+        mobile: 9762673744));
+    customerList.add(CustomerDataType(
+        id: 2,
+        name: 'Sameer Thorate',
+        address: 'City Pride, Swargate',
+        mobile: 9898989898));
+    customerList.add(CustomerDataType(
+        id: 3,
+        name: 'Shubham kustra',
+        address: 'Karve Raod Nulstop',
+        mobile: 9898989898));
+    customerList.add(CustomerDataType(
+        id: 4,
+        name: 'Rohan Yangatwar',
+        address: 'Shivaji Nagr Pune',
+        mobile: 9898989898));
+    customerList.add(CustomerDataType(
+        id: 5,
+        name: 'Rahul Arte ',
+        address: 'Amar plaza ',
+        mobile: 9898989898));
+    customerList.add(CustomerDataType(
+        id: 6,
+        name: 'Ashok Chnu',
+        address: 'Station Road',
+        mobile: 9898989898));
+    customerList.add(CustomerDataType(
+        id: 7,
+        name: 'Sagar Makyal',
+        address: 'chintamani Nagar ',
+        mobile: 9898989898));
+    customerList.add(CustomerDataType(
+        id: 8,
+        name: 'Raj akyak ',
+        address: 'Kholapur road ',
+        mobile: 9898989898));
+    customerList.add(CustomerDataType(
+        id: 8,
+        name: 'Raj akyak ',
+        address: 'Kholapur road ',
+        mobile: 9898989898));
+    customerList.add(CustomerDataType(
+        id: 8,
+        name: 'Raj akyak ',
+        address: 'Kholapur road ',
+        mobile: 9898989898));
+    customerList.add(CustomerDataType(
+        id: 8, name: 'sudesh ', address: 'Kholapur road ', mobile: 9898989898));
+    customerList.add(CustomerDataType(
+        id: 8, name: 'ram ', address: 'Kholapur road ', mobile: 9898989898));
+    customerList.add(CustomerDataType(
+        id: 8, name: ' akyak ', address: 'Kholapur road ', mobile: 9898989898));
+    customerList.add(CustomerDataType(
+        id: 8, name: 'surja  ', address: 'Kholapur road ', mobile: 9898989898));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldkey,
       appBar: AppBar(
         backgroundColor: Colors.green,
         title: Text('Customer List'),
         actions: <Widget>[
           Container(
             margin: EdgeInsets.all(10),
-            child: Icon(Icons.search,size: 30,),
+            child: Icon(
+              Icons.search,
+              size: 30,
+            ),
           )
         ],
+        leading: IconButton(
+          icon: MenuIconsPage(),
+          onPressed: () => _scaffoldkey.currentState.openDrawer(),
+        ),
       ),
       drawer: SafeArea(
         child: Theme(
@@ -58,7 +136,7 @@ class _CustomerListPageState extends State<CustomerListPage> {
                             'Home',
                             style: TextStyle(color: Colors.white),
                           ),
-                          onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage(widget.handleSignOut, widget._currentUser))),
+                          onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage())),
                         ),
                         ListTile(
                           leading: Icon(Icons.person, color: Colors.white),
@@ -66,7 +144,7 @@ class _CustomerListPageState extends State<CustomerListPage> {
                             'Profile',
                             style: TextStyle(color: Colors.white),
                           ),
-                           onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage(widget.handleSignOut, widget._currentUser))),
+                          // onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage(widget.handleSignOut, widget._currentUser))),
                         ),
                         ListTile(
                           leading: Icon(Icons.search, color: Colors.white),
@@ -74,7 +152,7 @@ class _CustomerListPageState extends State<CustomerListPage> {
                             'Search',
                             style: TextStyle(color: Colors.white),
                           ),
-                           onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage(widget.handleSignOut, widget._currentUser))),
+                          // onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage(widget.handleSignOut, widget._currentUser))),
                         ),
                         ListTile(
                           leading: Icon(Icons.history, color: Colors.white),
@@ -82,7 +160,7 @@ class _CustomerListPageState extends State<CustomerListPage> {
                             'History',
                             style: TextStyle(color: Colors.white),
                           ),
-                           onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage(widget.handleSignOut, widget._currentUser))),
+                          // onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage(widget.handleSignOut, widget._currentUser))),
                         ),
                         ListTile(
                           leading: Icon(Icons.payment, color: Colors.white),
@@ -90,7 +168,7 @@ class _CustomerListPageState extends State<CustomerListPage> {
                             'Payment',
                             style: TextStyle(color: Colors.white),
                           ),
-                           onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage(widget.handleSignOut, widget._currentUser))),
+                          //   onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage(widget.handleSignOut, widget._currentUser))),
                         ),
                         ListTile(
                           leading: Icon(
@@ -101,7 +179,7 @@ class _CustomerListPageState extends State<CustomerListPage> {
                             'Setting',
                             style: TextStyle(color: Colors.white),
                           ),
-                           onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage(widget.handleSignOut, widget._currentUser))),
+                          // onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage(widget.handleSignOut, widget._currentUser))),
                         ),
                       ],
                     ),
@@ -113,15 +191,16 @@ class _CustomerListPageState extends State<CustomerListPage> {
         ),
       ),
       body: Center(
+          child: SizedBox(
         child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10)
-          ),
-          child: ListView(
-            children: <Widget>[
-              Container(
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+          child: ListView.builder(
+            itemCount: customerList.length,
+            itemBuilder: (context, index) {
+              return Container(
+                margin: EdgeInsets.only(top: 5, left: 5, right: 5),
                 decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.4),
+                  color: Colors.grey.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(10),
                   shape: BoxShape.rectangle,
                 ),
@@ -129,20 +208,20 @@ class _CustomerListPageState extends State<CustomerListPage> {
                   leading: CircleAvatar(
                     backgroundImage: AssetImage('assets/wallpaper.jpg'),
                   ),
-                  title: Text('Prthamesh Sardeshmukh'),
-                  subtitle: Text('Mahesh Socity,Bibawadi pune'),
+                  title: Text(customerList[index].name),
+                  subtitle: Text(customerList[index].address),
                   trailing: Container(
                     height: 25,
-                    width: 69,                    
+                    width: 69,
                     child: Center(child: Icon(Icons.arrow_forward_ios)),
                   ),
-                  onTap: (){},
+                  onTap: () {},
                 ),
-              )
-            ],
+              );
+            },
           ),
         ),
-      ),      
+      )),
     );
   }
 }

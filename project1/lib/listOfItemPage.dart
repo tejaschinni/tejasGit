@@ -1,56 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project1/dashBoardPage.dart';
 import 'package:project1/demo/menuIcons.dart';
-import 'package:project1/orderDataType.dart';
+import 'package:project1/litemDataType.dart';
 
-class OrderPage extends StatefulWidget {
-  // final Function handleSignOut;
-  // final GoogleSignInAccount _currentUser;
-  // OrderPage(this.handleSignOut,this._currentUser);
+class ListOfItemPage extends StatefulWidget {
   @override
-  _OrderPageState createState() => _OrderPageState();
+  _ListOfItemPageState createState() => _ListOfItemPageState();
 }
 
-class _OrderPageState extends State<OrderPage> {
+class _ListOfItemPageState extends State<ListOfItemPage> {
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
-  List<OrderDataType> orderList = List();
+  List<ItemDataType> itemList = List();
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    orderList.add(OrderDataType(
-        id: 1,
-        name: 'Tejas Chinni',
-        price: 50
-    ));
-    orderList.add(OrderDataType(
-        id: 1,
-        name: 'Tejas Chinni',
-        price: 50
-    ));
-    orderList.add(OrderDataType(
-        id: 1,
-        name: 'Tejas Chinni',
-        price: 50
-    ));
-    orderList.add(OrderDataType(
-        id: 1,
-        name: 'Tejas Chinni',
-        price: 50
-    ));
-    orderList.add(OrderDataType(
-        id: 1,
-        name: 'Tejas Chinni',
-        price: 50
-    ));
-    orderList.add(OrderDataType(
-        id: 1,
-        name: 'Tejas Chinni',
-        price: 50
-    ));
-    
+
+    itemList.add(ItemDataType(id: 2,name: 'namama',price: 39));
   }
   @override
   Widget build(BuildContext context) {
@@ -58,16 +26,19 @@ class _OrderPageState extends State<OrderPage> {
       key: _scaffoldkey,
       appBar: AppBar(
         backgroundColor: Colors.green,
-        title: Text('Order'),
+        title: Text('List Of Items'),
         actions: <Widget>[
           Container(
             margin: EdgeInsets.all(10),
-            child: Icon(Icons.search,size: 30,),
+            child: Icon(
+              Icons.search,
+              size: 30,
+            ),
           )
         ],
         leading: IconButton(
           icon: MenuIconsPage(),
-          onPressed: ()=> _scaffoldkey.currentState.openDrawer(),
+          onPressed: () => _scaffoldkey.currentState.openDrawer(),
         ),
       ),
       drawer: SafeArea(
@@ -104,7 +75,10 @@ class _OrderPageState extends State<OrderPage> {
                             'Home',
                             style: TextStyle(color: Colors.white),
                           ),
-                          onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage())),
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DashBoardPage())),
                         ),
                         ListTile(
                           leading: Icon(Icons.person, color: Colors.white),
@@ -112,6 +86,10 @@ class _OrderPageState extends State<OrderPage> {
                             'Profile',
                             style: TextStyle(color: Colors.white),
                           ),
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DashBoardPage())),
                         ),
                         ListTile(
                           leading: Icon(Icons.search, color: Colors.white),
@@ -119,6 +97,10 @@ class _OrderPageState extends State<OrderPage> {
                             'Search',
                             style: TextStyle(color: Colors.white),
                           ),
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DashBoardPage())),
                         ),
                         ListTile(
                           leading: Icon(Icons.history, color: Colors.white),
@@ -126,6 +108,10 @@ class _OrderPageState extends State<OrderPage> {
                             'History',
                             style: TextStyle(color: Colors.white),
                           ),
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DashBoardPage())),
                         ),
                         ListTile(
                           leading: Icon(Icons.payment, color: Colors.white),
@@ -133,6 +119,10 @@ class _OrderPageState extends State<OrderPage> {
                             'Payment',
                             style: TextStyle(color: Colors.white),
                           ),
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DashBoardPage())),
                         ),
                         ListTile(
                           leading: Icon(
@@ -143,6 +133,10 @@ class _OrderPageState extends State<OrderPage> {
                             'Setting',
                             style: TextStyle(color: Colors.white),
                           ),
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DashBoardPage())),
                         ),
                       ],
                     ),
@@ -155,34 +149,49 @@ class _OrderPageState extends State<OrderPage> {
       ),
       body: Center(
         child: Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-            child: ListView.builder(
-              itemCount: orderList.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  margin: EdgeInsets.only(top: 5, left: 5, right: 5),
-                  decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(10),
-                    shape: BoxShape.rectangle,
-                  ),
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: AssetImage('assets/wallpaper.jpg'),
+          child: ListView.builder(
+            itemCount: itemList.length,
+            itemBuilder: (context, index) {
+              return Center(
+                child: SizedBox(
+                  child: Container(
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: itemList.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: EdgeInsets.only(top: 5, left: 5, right: 5),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(10),
+                            shape: BoxShape.rectangle,
+                          ),
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              backgroundImage:
+                                  AssetImage('assets/wallpaper.jpg'),
+                            ),
+                            title: Text(itemList[index].name),
+                            trailing: Container(
+                              height: 25,
+                              width: 69,
+                              child:
+                                  Center(child: Text(itemList[index].price.toString())),
+                            ),
+                            onTap: () {},
+                          ),
+                        );
+                      },
                     ),
-                    title: Text(orderList[index].name),
-                    subtitle: Text(orderList[index].price.toString()),
-                    trailing: Container(
-                      height: 25,
-                      width: 69,
-                      child: Center(child: Icon(Icons.arrow_forward_ios)),
-                    ),
-                    onTap: () {},
                   ),
-                );
-              },
-            ),
-            ),
+                ),
+              );
+            },
+          ),
+        ),
       ),
     );
   }
