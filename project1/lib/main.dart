@@ -9,6 +9,7 @@ import 'package:project1/demo/stackDemo.dart';
 import 'package:project1/listOfItemPage.dart';
 import 'package:project1/numberVerification.dart';
 import 'package:project1/orderPage.dart';
+import 'package:project1/orderViewPage.dart';
 import 'package:project1/storeBox.dart';
 
 void main() => runApp(MyApp());
@@ -23,7 +24,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-           home: ListOfItemPage(),
+           home: DashBoardPage(),
     );
   }
 }

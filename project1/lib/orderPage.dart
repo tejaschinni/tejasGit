@@ -3,6 +3,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project1/dashBoardPage.dart';
 import 'package:project1/demo/menuIcons.dart';
 import 'package:project1/orderDataType.dart';
+import 'package:project1/orderViewPage.dart';
 
 class OrderPage extends StatefulWidget {
   // final Function handleSignOut;
@@ -23,32 +24,44 @@ class _OrderPageState extends State<OrderPage> {
     orderList.add(OrderDataType(
         id: 1,
         name: 'Tejas Chinni',
-        price: 50
+        price: 50,
+        quantity: 2,
+        product: 'sugar',
     ));
     orderList.add(OrderDataType(
-        id: 1,
+        id: 3,
         name: 'Tejas Chinni',
-        price: 50
+        price: 60,
+        quantity: 1,
+        product: 'sugar',
     ));
     orderList.add(OrderDataType(
-        id: 1,
+        id: 9,
         name: 'Tejas Chinni',
-        price: 50
+        price: 55,
+        quantity: 2,
+        product: 'sugar',
     ));
     orderList.add(OrderDataType(
-        id: 1,
+        id: 5,
         name: 'Tejas Chinni',
-        price: 50
+        price: 50,
+        quantity: 2,
+        product: 'sugar',
     ));
     orderList.add(OrderDataType(
-        id: 1,
+        id: 11,
         name: 'Tejas Chinni',
-        price: 50
+        price: 50,
+        quantity: 2,
+        product: 'sugar',
     ));
     orderList.add(OrderDataType(
-        id: 1,
+        id: 10,
         name: 'Tejas Chinni',
-        price: 50
+        price: 50,
+        quantity: 2,
+        product: 'sugar',
     ));
     
   }
@@ -173,11 +186,19 @@ class _OrderPageState extends State<OrderPage> {
                     title: Text(orderList[index].name),
                     subtitle: Text(orderList[index].price.toString()),
                     trailing: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(10)
+                      ),
                       height: 25,
                       width: 69,
-                      child: Center(child: Icon(Icons.arrow_forward_ios)),
+                      child: Center(child: Text('View List')),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderViewPage(orderDataType: orderList[index],)));
+                      });
+                    },
                   ),
                 );
               },

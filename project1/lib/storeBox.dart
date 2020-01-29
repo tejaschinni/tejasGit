@@ -13,17 +13,19 @@ class _StoreBoxPageState extends State<StoreBoxPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
-        child: InkWell(
-          onTap: (){
-          },
-          child: Container(
-            height: 40,
-            color: Colors.green,
-          child: Center(child: Text("Prossed to Continue",textAlign: TextAlign.center, style: TextStyle(fontSize: 15),)),
-          
+          child: InkWell(
+        onTap: () {},
+        child: Container(
+          height: 40,
+          color: Colors.green,
+          child: Center(
+              child: Text(
+            "Prossed to Continue",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 15),
+          )),
         ),
-        )
-      ),
+      )),
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: Stack(
@@ -91,10 +93,8 @@ class _StoreBoxPageState extends State<StoreBoxPage> {
                 ],
               ),
             ),
-            
           ],
         ),
-        
       ),
     );
   }

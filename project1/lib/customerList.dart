@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project1/customerDatatype.dart';
+import 'package:project1/customerDetailPage.dart';
 import 'package:project1/dashBoardPage.dart';
 import 'package:project1/demo/menuIcons.dart';
 
@@ -31,54 +32,27 @@ class _CustomerListPageState extends State<CustomerListPage> {
         name: 'Sameer Thorate',
         address: 'City Pride, Swargate',
         mobile: 9898989898));
-    customerList.add(CustomerDataType(
-        id: 3,
-        name: 'Shubham kustra',
-        address: 'Karve Raod Nulstop',
-        mobile: 9898989898));
-    customerList.add(CustomerDataType(
-        id: 4,
-        name: 'Rohan Yangatwar',
-        address: 'Shivaji Nagr Pune',
-        mobile: 9898989898));
-    customerList.add(CustomerDataType(
-        id: 5,
-        name: 'Rahul Arte ',
-        address: 'Amar plaza ',
-        mobile: 9898989898));
-    customerList.add(CustomerDataType(
-        id: 6,
-        name: 'Ashok Chnu',
-        address: 'Station Road',
-        mobile: 9898989898));
-    customerList.add(CustomerDataType(
-        id: 7,
-        name: 'Sagar Makyal',
-        address: 'chintamani Nagar ',
-        mobile: 9898989898));
-    customerList.add(CustomerDataType(
-        id: 8,
-        name: 'Raj akyak ',
-        address: 'Kholapur road ',
-        mobile: 9898989898));
-    customerList.add(CustomerDataType(
-        id: 8,
-        name: 'Raj akyak ',
-        address: 'Kholapur road ',
-        mobile: 9898989898));
-    customerList.add(CustomerDataType(
-        id: 8,
-        name: 'Raj akyak ',
-        address: 'Kholapur road ',
-        mobile: 9898989898));
-    customerList.add(CustomerDataType(
-        id: 8, name: 'sudesh ', address: 'Kholapur road ', mobile: 9898989898));
-    customerList.add(CustomerDataType(
-        id: 8, name: 'ram ', address: 'Kholapur road ', mobile: 9898989898));
-    customerList.add(CustomerDataType(
-        id: 8, name: ' akyak ', address: 'Kholapur road ', mobile: 9898989898));
-    customerList.add(CustomerDataType(
-        id: 8, name: 'surja  ', address: 'Kholapur road ', mobile: 9898989898));
+    // customerList.add(CustomerDataType(
+    //     id: 3,
+    //     name: 'Shubham kustra',
+    //     address: 'Karve Raod Nulstop',
+    //     mobile: 9898989898));
+    // customerList.add(CustomerDataType(
+    //     id: 4,
+    //     name: 'Rohan Yangatwar',
+    //     address: 'Shivaji Nagr Pune',
+    //     mobile: 9898989898));
+    // customerList.add(CustomerDataType(
+    //     id: 5,
+    //     name: 'Rahul Arte ',
+    //     address: 'Amar plaza ',
+    //     mobile: 9898989898));
+    // customerList.add(CustomerDataType(
+    //     id: 6,
+    //     name: 'Ashok Chnu',
+    //     address: 'Station Road',
+    //     mobile: 9898989898));
+    
   }
 
   @override
@@ -215,7 +189,11 @@ class _CustomerListPageState extends State<CustomerListPage> {
                     width: 69,
                     child: Center(child: Icon(Icons.arrow_forward_ios)),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    setState(() {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>CustomerDetailPage(customerdatatype: customerList[index],)));
+                    });
+                  },
                 ),
               );
             },
