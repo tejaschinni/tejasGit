@@ -81,6 +81,7 @@ class _StoreBoxPageState extends State<StoreBoxPage> {
                     margin: EdgeInsets.all(10),
                     child: TextField(
                       decoration: InputDecoration(hintText: '*Shop Phone No.'),
+                      
                     ),
                   ),
                   Container(

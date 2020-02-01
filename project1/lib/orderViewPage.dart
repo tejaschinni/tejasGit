@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:project1/orderDataType.dart';
 import 'package:project1/orderPage.dart';
 
+import 'itemDatatype.dart';
+
 class OrderViewPage extends StatefulWidget {
   final OrderDataType orderDataType;
   OrderViewPage({this.orderDataType});
@@ -10,6 +12,77 @@ class OrderViewPage extends StatefulWidget {
 }
 
 class _OrderViewPageState extends State<OrderViewPage> {
+  List<ItemDataType> itemList = List();
+  bool boxvalue = false;
+  TextEditingController nameController = TextEditingController();
+  TextEditingController itemriceController = TextEditingController();
+  TextEditingController itemNameController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    nameController.text = widget.orderDataType.name;
+    itemNameController.text = widget.orderDataType.product;
+    setState(() {
+      itemList.add(ItemDataType(
+          itemName: 'Shugar',
+          itemQuantity: '2',
+          itemrice: '30',
+          itemUnite: 'kg'));
+      itemList.add(ItemDataType(
+          itemName: 'Rice',
+          itemQuantity: '2',
+          itemrice: '30',
+          itemUnite: 'kg'));
+      itemList.add(ItemDataType(
+          itemName: 'Dhal',
+          itemQuantity: '2',
+          itemrice: '30',
+          itemUnite: 'kg'));
+      itemList.add(ItemDataType(
+          itemName: 'Honey',
+          itemQuantity: '2',
+          itemrice: '30',
+          itemUnite: 'kg'));
+      itemList.add(ItemDataType(
+          itemName: 'Maggi',
+          itemQuantity: '2',
+          itemrice: '30',
+          itemUnite: 'kg'));
+      itemList.add(ItemDataType(
+          itemName: 'HandWash',
+          itemQuantity: '2',
+          itemrice: '30',
+          itemUnite: 'kg'));
+      itemList.add(ItemDataType(
+          itemName: 'Hair Oil',
+          itemQuantity: '2',
+          itemrice: '30',
+          itemUnite: 'kg'));
+      itemList.add(ItemDataType(
+          itemName: 'Shugar',
+          itemQuantity: '2',
+          itemrice: '30',
+          itemUnite: 'kg'));
+      itemList.add(ItemDataType(
+          itemName: 'Shugar',
+          itemQuantity: '2',
+          itemrice: '30',
+          itemUnite: 'kg'));
+      itemList.add(ItemDataType(
+          itemName: 'Shugar',
+          itemQuantity: '2',
+          itemrice: '30',
+          itemUnite: 'kg'));
+      itemList.add(ItemDataType(
+          itemName: 'Shugar',
+          itemQuantity: '2',
+          itemrice: '30',
+          itemUnite: 'kg'));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,36 +108,118 @@ class _OrderViewPageState extends State<OrderViewPage> {
               clipper: BottomWaveClipper(),
             ),
             Container(
-              padding: EdgeInsets.only(top: 170),
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(10)),
-              child: ListView.builder(
-                padding: EdgeInsets.only(top: 140),
-                itemCount: widget.orderDataType.id,
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: <Widget>[
-                      Text(widget.orderDataType.name),
-                      SizedBox(
-                        height: 10,
+              padding: EdgeInsets.only(top: 235),
+              margin: EdgeInsets.all(12),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.green[200],
+                    borderRadius: BorderRadius.circular(10)),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        height: 40,
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Text(
+                          'Item Name',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
                       ),
-                      Text(widget.orderDataType.product),
-                      SizedBox(
-                        height: 10,
+                    ),
+                    Expanded(
+                      child: Container(
+                        height: 40,
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Text('Item Quantity',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold)),
                       ),
-                      Text(widget.orderDataType.quantity.toString()),
-                      SizedBox(
-                        height: 10,
+                    ),
+                    Expanded(
+                      child: Container(
+                        height: 40,
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Text('Avaliable',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold)),
                       ),
-                      Text(widget.orderDataType.price.toString()),
-                      SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  );
-                },
+                    ),
+                  ],
+                ),
               ),
-            )
+            ),
+            Container(
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                padding: EdgeInsets.only(top: 290),
+                margin: EdgeInsets.all(10),
+                child: ListView.builder(
+                  itemCount: itemList.length,
+                  itemBuilder: (context, index) {
+                    return Center(
+                      child: Container(
+                        margin: EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: [Colors.green[100], Colors.green]),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                                child: Container(
+                              height: 40,
+                              alignment: Alignment.center,
+                              margin: EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Text(itemList[index].itemName),
+                            )),
+                            Expanded(
+                                child: Container(
+                              height: 40,
+                              alignment: Alignment.center,
+                              margin: EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Text(itemList[index].itemQuantity +
+                                  '\t' +
+                                  itemList[index].itemUnite),
+                            )),
+                            Expanded(
+                                child: Container(
+                              height: 40,
+                              alignment: Alignment.center,
+                              margin: EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Checkbox(
+                                value: boxvalue,
+                                checkColor: Colors.black,
+                                activeColor:
+                                    Colors.transparent.withOpacity(0.3),
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    boxvalue = value;
+                                  });
+                                },
+                              ),
+                            )),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ))
           ],
         ),
       ),

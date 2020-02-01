@@ -70,14 +70,10 @@ class _CustomerDetailPageState extends State<CustomerDetailPage> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 170),
+              padding: EdgeInsets.only(top: 300),
               decoration:
                   BoxDecoration(borderRadius: BorderRadius.circular(10)),
-              child: ListView.builder(
-                padding: EdgeInsets.only(top: 140),
-                itemCount: widget.customerdatatype.id,
-                itemBuilder: (context, index) {
-                  return Column(
+              child:  Column(
                     children: <Widget>[
                       Container(
                         margin: EdgeInsets.all(10),
@@ -110,9 +106,7 @@ class _CustomerDetailPageState extends State<CustomerDetailPage> {
                         ),
                       ),
                     ],
-                  );
-                },
-              ),
+                  ),
             )
           ],
         ),

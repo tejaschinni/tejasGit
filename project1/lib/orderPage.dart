@@ -24,46 +24,61 @@ class _OrderPageState extends State<OrderPage> {
     orderList.add(OrderDataType(
         id: 1,
         name: 'Tejas Chinni',
-        price: 50,
-        quantity: 2,
-        product: 'sugar',
+              
+    ));
+    orderList.add(OrderDataType(
+        id: 2,
+        name: 'Sameer',
+        
+        
     ));
     orderList.add(OrderDataType(
         id: 3,
-        name: 'Tejas Chinni',
-        price: 60,
-        quantity: 1,
-        product: 'sugar',
+        name: 'Raj M',
+        
+        
     ));
     orderList.add(OrderDataType(
-        id: 9,
-        name: 'Tejas Chinni',
-        price: 55,
-        quantity: 2,
-        product: 'sugar',
+        id: 4,
+        name: 'Sagar R',
+        
+        
     ));
     orderList.add(OrderDataType(
         id: 5,
-        name: 'Tejas Chinni',
-        price: 50,
-        quantity: 2,
-        product: 'sugar',
+        name: 'Mahesh S',
+        
+        
     ));
     orderList.add(OrderDataType(
-        id: 11,
-        name: 'Tejas Chinni',
-        price: 50,
-        quantity: 2,
-        product: 'sugar',
+        id: 6,
+        name: 'Suraj',
+       
     ));
+    orderList.add(OrderDataType(
+        id: 7,
+        name: 'Ramesh',
+        
+        
+    ));
+    orderList.add(OrderDataType(
+        id: 8,
+        name: 'Somesh ',
+        
+        
+    ));
+    orderList.add(OrderDataType(
+        id: 9,
+        name: 'Shubham C',
+        
+        
+    )); 
     orderList.add(OrderDataType(
         id: 10,
-        name: 'Tejas Chinni',
-        price: 50,
-        quantity: 2,
-        product: 'sugar',
-    ));
-    
+        name: 'Rahul A',
+        
+        
+    ));   
   }
   @override
   Widget build(BuildContext context) {
