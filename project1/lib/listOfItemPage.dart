@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project1/dashBoardPage.dart';
 import 'package:project1/demo/menuIcons.dart';
 import 'package:project1/litemDataType.dart';
 
 class ListOfItemPage extends StatefulWidget {
+  final Function handleSignOut;
+  final GoogleSignInAccount _currentUser;
+  ListOfItemPage(this.handleSignOut,this._currentUser);
   @override
   _ListOfItemPageState createState() => _ListOfItemPageState();
 }
@@ -78,7 +82,7 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
                           onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => DashBoardPage())),
+                                  builder: (context) => DashBoardPage(widget.handleSignOut,widget._currentUser))),
                         ),
                         ListTile(
                           leading: Icon(Icons.person, color: Colors.white),
@@ -89,7 +93,7 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
                           onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => DashBoardPage())),
+                                  builder: (context) => DashBoardPage(widget.handleSignOut,widget._currentUser))),
                         ),
                         ListTile(
                           leading: Icon(Icons.search, color: Colors.white),
@@ -100,7 +104,7 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
                           onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => DashBoardPage())),
+                                  builder: (context) => DashBoardPage(widget.handleSignOut,widget._currentUser))),
                         ),
                         ListTile(
                           leading: Icon(Icons.history, color: Colors.white),
@@ -111,7 +115,7 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
                           onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => DashBoardPage())),
+                                  builder: (context) => DashBoardPage(widget.handleSignOut,widget._currentUser))),
                         ),
                         ListTile(
                           leading: Icon(Icons.payment, color: Colors.white),
@@ -122,7 +126,7 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
                           onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => DashBoardPage())),
+                                  builder: (context) => DashBoardPage(widget.handleSignOut,widget._currentUser))),
                         ),
                         ListTile(
                           leading: Icon(
@@ -136,7 +140,7 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
                           onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => DashBoardPage())),
+                                  builder: (context) => DashBoardPage(widget.handleSignOut,widget._currentUser))),
                         ),
                       ],
                     ),

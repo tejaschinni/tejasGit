@@ -112,7 +112,8 @@ class _OrderViewPageState extends State<OrderViewPage> {
               margin: EdgeInsets.all(12),
               child: Container(
                 decoration: BoxDecoration(
-                    color: Colors.green[200],
+                    gradient: LinearGradient(
+                        colors: [Colors.green[100], Colors.green]),
                     borderRadius: BorderRadius.circular(10)),
                 child: Row(
                   children: <Widget>[
@@ -204,7 +205,7 @@ class _OrderViewPageState extends State<OrderViewPage> {
                                   borderRadius: BorderRadius.circular(20)),
                               child: Checkbox(
                                 value: boxvalue,
-                                checkColor: Colors.black,
+                                checkColor: Colors.white,
                                 activeColor:
                                     Colors.transparent.withOpacity(0.3),
                                 onChanged: (bool value) {

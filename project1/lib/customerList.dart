@@ -5,10 +5,12 @@ import 'package:project1/customerDetailPage.dart';
 import 'package:project1/dashBoardPage.dart';
 import 'package:project1/demo/menuIcons.dart';
 
+import 'demo/demoPage.dart';
+
 class CustomerListPage extends StatefulWidget {
-  // final Function handleSignOut;
-  // final GoogleSignInAccount _currentUser;
-  // CustomerListPage(this.handleSignOut,this._currentUser);
+  final Function handleSignOut;
+  final GoogleSignInAccount _currentUser;
+  CustomerListPage(this.handleSignOut,this._currentUser);
   @override
   _CustomerListPageState createState() => _CustomerListPageState();
 }
@@ -110,7 +112,7 @@ class _CustomerListPageState extends State<CustomerListPage> {
                             'Home',
                             style: TextStyle(color: Colors.white),
                           ),
-                          onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage())),
+                          onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage(widget.handleSignOut,widget._currentUser))),
                         ),
                         ListTile(
                           leading: Icon(Icons.person, color: Colors.white),
@@ -153,7 +155,7 @@ class _CustomerListPageState extends State<CustomerListPage> {
                             'Setting',
                             style: TextStyle(color: Colors.white),
                           ),
-                          // onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage(widget.handleSignOut, widget._currentUser))),
+                          onTap: () => Navigator.push(context, MaterialPageRoute(builder:  (context)=>DemoPage(widget.handleSignOut,widget._currentUser))),
                         ),
                       ],
                     ),

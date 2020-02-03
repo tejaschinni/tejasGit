@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:project1/authPage.dart';
 import 'package:project1/demo/demoPage.dart';
+import 'package:image_picker/image_picker.dart';
 
 class StoreBoxPage extends StatefulWidget {
   @override
@@ -9,9 +12,35 @@ class StoreBoxPage extends StatefulWidget {
 }
 
 class _StoreBoxPageState extends State<StoreBoxPage> {
+  File _image;
+
+  Future getImage() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _image = image;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+        title: Text("Profile"),
+        actions: <Widget>[
+          InkWell(
+            onTap: (){
+              setState(() {
+                getImage();
+              });
+            },
+            child: Container(
+              margin: EdgeInsets.all(10),
+              child: Icon(Icons.image),
+            ),
+          )
+        ],
+      ),
       bottomNavigationBar: BottomAppBar(
           child: InkWell(
         onTap: () {},
@@ -37,7 +66,7 @@ class _StoreBoxPageState extends State<StoreBoxPage> {
                     color: Colors.black,
                     image: DecorationImage(
                         image: AssetImage(
-                          'assets/nature.jpg',
+                          'assets/wallpaper.jpg',
                         ),
                         fit: BoxFit.fill)),
               ),
@@ -49,7 +78,12 @@ class _StoreBoxPageState extends State<StoreBoxPage> {
                 alignment: Alignment.topCenter,
                 child: CircleAvatar(
                   maxRadius: 70,
-                  backgroundImage: AssetImage('assets/wallpaper.jpg'),
+                  child: _image == null
+                      ? Text('No image selected.')
+                      : CircleAvatar(
+                        maxRadius: 60,
+                        child: Image.file(_image,fit: BoxFit.cover,),
+                      )
                 ),
               ),
             ),
@@ -81,14 +115,13 @@ class _StoreBoxPageState extends State<StoreBoxPage> {
                     margin: EdgeInsets.all(10),
                     child: TextField(
                       decoration: InputDecoration(hintText: '*Shop Phone No.'),
-                      
                     ),
                   ),
                   Container(
                     margin: EdgeInsets.all(10),
                     child: TextField(
                       decoration:
-                          InputDecoration(hintText: '*Shopact license no.'),
+                          InputDecoration(hintText: '*Shop Act license no.'),
                     ),
                   ),
                 ],

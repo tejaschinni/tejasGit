@@ -27,8 +27,11 @@ class _AuthPageState extends State<AuthPage> {
     });
     _googleSignIn.signInSilently();
     if (_currentUser != null) {
-      // Navigator.pushReplacement(
-      //     context, MaterialPageRoute(builder: (context) => DashBoardPage(_handleSignOut,_currentUser)));
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  DashBoardPage(_handleSignOut, _currentUser)));
     } else {
       print('Log IN Failed');
     }
@@ -39,10 +42,10 @@ class _AuthPageState extends State<AuthPage> {
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;
 
-    // Navigator.pushReplacement(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: (context) => DashBoardPage(_handleSignOut, _currentUser)));
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => DashBoardPage(_handleSignOut, _currentUser)));
 
     final AuthCredential credential = GoogleAuthProvider.getCredential(
       accessToken: googleAuth.accessToken,
@@ -81,25 +84,26 @@ class _AuthPageState extends State<AuthPage> {
         child: Center(
           child: Container(
             alignment: Alignment.bottomCenter,
-            margin: EdgeInsets.all(30),
-            child: RaisedButton(
-              color: Colors.redAccent,
-              onPressed: () {
-                _handleSignIn();
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => DemoPage(_handleSignOut,_currentUser),
-                //     ));
-              },
-              child: Text(
-                "Sign In With Google",
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.black),
+            padding: EdgeInsets.only(bottom: 70),
+            margin: EdgeInsets.all(60),
+            child: InkWell(
+              child: Card(  
+                color: Colors.red,
+                margin: EdgeInsets.all(30),
+                elevation: 30,
+                child: Container(
+                  //height: 60,
+                  padding: new EdgeInsets.all(20.0),
+                  child: Text(
+                  "Sign In With Google",
+                  style: TextStyle(fontSize: 18,color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
+                )
               ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  side: BorderSide(color: Colors.redAccent)),
+              onTap: () {
+                _handleSignIn();
+              },
             ),
           ),
         ),

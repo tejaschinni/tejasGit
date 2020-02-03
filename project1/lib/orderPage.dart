@@ -6,9 +6,9 @@ import 'package:project1/orderDataType.dart';
 import 'package:project1/orderViewPage.dart';
 
 class OrderPage extends StatefulWidget {
-  // final Function handleSignOut;
-  // final GoogleSignInAccount _currentUser;
-  // OrderPage(this.handleSignOut,this._currentUser);
+  final Function handleSignOut;
+  final GoogleSignInAccount _currentUser;
+  OrderPage(this.handleSignOut,this._currentUser);
   @override
   _OrderPageState createState() => _OrderPageState();
 }
@@ -132,7 +132,7 @@ class _OrderPageState extends State<OrderPage> {
                             'Home',
                             style: TextStyle(color: Colors.white),
                           ),
-                          onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage())),
+                          onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage(widget.handleSignOut,widget._currentUser))),
                         ),
                         ListTile(
                           leading: Icon(Icons.person, color: Colors.white),
