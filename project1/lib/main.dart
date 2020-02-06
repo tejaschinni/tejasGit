@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project1/authPage.dart';
+import 'package:project1/collectionDemo/addDataForCollection.dart';
+import 'package:project1/collectionDemo/listPage.dart';
 import 'package:project1/customerList.dart';
 import 'package:project1/dashBoardPage.dart';
 import 'package:project1/demo/cardDemo.dart';
@@ -25,7 +27,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-           home: AuthPage(),
+           home: ListPage(),
     );
   }
 }

@@ -13,11 +13,19 @@ class StoreBoxPage extends StatefulWidget {
 
 class _StoreBoxPageState extends State<StoreBoxPage> {
   File _image;
+  File _image1;
 
   Future getImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
     setState(() {
       _image = image;
+    });
+  }
+
+  Future storeImage() async {
+    var image1 = await ImagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _image1 = image1;
     });
   }
 
@@ -27,19 +35,6 @@ class _StoreBoxPageState extends State<StoreBoxPage> {
       appBar: AppBar(
         backgroundColor: Colors.green,
         title: Text("Profile"),
-        actions: <Widget>[
-          InkWell(
-            onTap: (){
-              setState(() {
-                getImage();
-              });
-            },
-            child: Container(
-              margin: EdgeInsets.all(10),
-              child: Icon(Icons.image),
-            ),
-          )
-        ],
       ),
       bottomNavigationBar: BottomAppBar(
           child: InkWell(
@@ -59,32 +54,57 @@ class _StoreBoxPageState extends State<StoreBoxPage> {
       body: SafeArea(
         child: Stack(
           children: <Widget>[
-            ClipPath(
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.35,
-                decoration: BoxDecoration(
-                    color: Colors.black,
-                    image: DecorationImage(
-                        image: AssetImage(
-                          'assets/wallpaper.jpg',
+            InkWell(
+              onTap: () {
+                setState(() {
+                  storeImage();
+                });
+              },
+              child: ClipPath(
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.35,
+                  // decoration: BoxDecoration(
+                  //     color: Colors.black,
+                  //     image: DecorationImage(
+                  //         image: AssetImage(
+                  //           'assets/wallpaper.jpg',
+                  //         ),
+                  //         fit: BoxFit.fill)),
+                  child: _image1 == null
+                      ? Text(
+                          'Store Image.',
+                        )
+                      : Image.file(
+                          _image1,
+                          fit: BoxFit.fill,
                         ),
-                        fit: BoxFit.fill)),
+                ),
+                clipper: BottomWaveClipper(),
               ),
-              clipper: BottomWaveClipper(),
             ),
             Container(
               margin: EdgeInsets.only(top: 150),
               child: Container(
                 alignment: Alignment.topCenter,
                 child: CircleAvatar(
-                  maxRadius: 70,
-                  child: _image == null
-                      ? Text('No image selected.')
-                      : CircleAvatar(
-                        maxRadius: 60,
-                        child: Image.file(_image,fit: BoxFit.cover,),
-                      )
-                ),
+                  backgroundColor: Colors.yellow,
+                    maxRadius: 70,
+                    child: InkWell(
+                      onTap: (){
+                        setState(() {
+                          getImage();
+                        });
+                      },
+                                            child: _image == null
+                          ? Text('No image selected.')
+                          : CircleAvatar(
+                              backgroundImage: FileImage(
+                                _image,
+                              ),
+                              maxRadius: 60,
+                            ),
+                    ))
+                    ,
               ),
             ),
             Container(
