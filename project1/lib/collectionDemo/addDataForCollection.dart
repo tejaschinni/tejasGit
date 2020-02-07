@@ -18,7 +18,7 @@ class _AddDataForCollectionState extends State<AddDataForCollection> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Collection Demo'),
-      ),   
+      ),
       floatingActionButton: FloatingActionButton(onPressed: (){
         print(name);
         print(votes);
