@@ -4,6 +4,7 @@ import 'package:project1/collectionDemo/addDataForCollection.dart';
 import 'package:project1/collectionDemo/listPage.dart';
 import 'package:project1/collectionDemo/studentCollectionDemo/addStudent.dart';
 import 'package:project1/collectionDemo/studentCollectionDemo/studentList.dart';
+import 'package:project1/confirmPage.dart';
 import 'package:project1/customerList.dart';
 import 'package:project1/dashBoardPage.dart';
 import 'package:project1/demo/cardDemo.dart';
@@ -29,7 +30,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-           home: StudentList(),
+           home: AuthPage(),
     );
   }
 }

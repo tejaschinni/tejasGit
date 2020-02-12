@@ -1,0 +1,231 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:project1/authPage.dart';
+import 'package:project1/constant.dart';
+import 'package:project1/createProfile.dart';
+import 'package:project1/customer.dart';
+import 'package:project1/dashBoardPage.dart';
+
+class ConfirmPage extends StatefulWidget {
+  final Function handleSignOut;
+  final String documentPath;
+  final GoogleSignInAccount _currentUser;
+  ConfirmPage(this.handleSignOut, this._currentUser, this.documentPath);
+  @override
+  _ConfirmPageState createState() => _ConfirmPageState();
+}
+
+class _ConfirmPageState extends State<ConfirmPage> {
+  String userEmail;
+  TextEditingController name = TextEditingController();
+  FirebaseUser user;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  String customerprofile;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    cFireBaseAuth.currentUser().then((user) => setState(() {
+          this.user = user;
+          userEmail = user.email;
+        }));
+    setState(() {
+      print("------Doc Path------------" + widget.documentPath);
+    });
+  }
+
+  void getEmail() {
+    setState(() {
+      Firestore.instance
+          .document(widget.documentPath)
+          .get()
+          .then((DocumentSnapshot ds) {
+        if (ds.exists) {
+          print("__________true________________" + ds.documentID.toString());
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (contex) => DashBoardPage(
+                      widget.handleSignOut,
+                      widget._currentUser)));
+
+        } else {
+          print("--Email Null--  " + ds.documentID.toString());
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => CreateProfilePage(
+                      widget.handleSignOut,
+                      widget._currentUser)));
+
+        }
+      });
+      // final snapShot =  Firestore.instance.collection('Customer').document(userEmail).get();
+
+      //   if(snapShot == null ){
+      //     print("=----------Email Null "+userEmail);
+      //   }
+      //   else
+      //   {
+      //     print("-------------------Email "+userEmail);
+      //   }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Select"),
+      ),
+      body: Center(
+        child: Stack(
+          children: <Widget>[
+            InkWell(
+              child: ClipPath(
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.35,
+                  decoration: BoxDecoration(
+                      color: Colors.black,
+                      image: DecorationImage(
+                          image: AssetImage(
+                            'assets/wallpaper.jpg',
+                          ),
+                          fit: BoxFit.fill)),
+                ),
+                clipper: BottomWaveClipper(),
+              ),
+            ),
+            // Container(
+            //   margin: EdgeInsets.only(top: 150),
+            //   child: Container(
+            //     alignment: Alignment.topCenter,
+            //     child: CircleAvatar(
+            //         backgroundColor: Colors.yellow,
+            //         maxRadius: 70,
+            //         child: InkWell(
+            //           onTap: () {
+            //             setState(() {});
+            //           },
+            //         )),
+            //   ),
+            // ),
+            Container(
+              padding: EdgeInsets.only(top: 170),
+              child: ListView(
+                //mainAxisAlignment: MainAxisAlignment.center,
+                padding: EdgeInsets.only(top: 140),
+                children: <Widget>[
+                  Container(
+                    alignment: Alignment.center,
+                    child: Text("Select If your are Customer Or Shop Owner"),
+                  ),
+                  InkWell(
+                    child: Card(
+                        color: Colors.red,
+                        margin: EdgeInsets.all(30),
+                        elevation: 30,
+                        child: Container(
+                          //height: 60,
+                          padding: new EdgeInsets.all(20.0),
+                          child: Text(
+                            "Customer",
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                            textAlign: TextAlign.center,
+                          ),
+                        )),
+                    onTap: () {
+                      getEmail();
+                    },
+                  ),
+                  InkWell(
+                    child: Card(
+                        color: Colors.red,
+                        margin: EdgeInsets.all(30),
+                        elevation: 30,
+                        child: Container(
+                          //height: 60,
+                          padding: new EdgeInsets.all(20.0),
+                          child: Text(
+                            "Shop Owner",
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                            textAlign: TextAlign.center,
+                          ),
+                        )),
+                    onTap: () {
+                      setState(() {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DashBoardPage(
+                                    widget.handleSignOut,
+                                    widget._currentUser)));
+                      });
+                    },
+                  ),
+                  Container(
+                    child: TextField(
+                      controller: name,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    child: RaisedButton(
+                      child: Text('OK'),
+                      onPressed: () {
+                        setState(() {
+                          Firestore.instance
+                              .collection('Customer')
+                              .document(widget.documentPath)
+                              .get()
+                              .then((DocumentSnapshot ds) {
+                            if (ds.exists) {
+                              setState(() {
+                                name.text = 'Email Exists';
+                              });
+                            } else {
+                              setState(() {
+                                name.text = ds.documentID;
+                                print(userEmail);
+                              });
+                            }
+                          });
+                        });
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class BottomWaveClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = new Path();
+    path.lineTo(0.0, size.height - 110);
+    path.lineTo(
+      size.width,
+      size.height - 40,
+    );
+    path.lineTo(size.width, 0);
+    path.close();
+
+    return path;
+  }
+
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}

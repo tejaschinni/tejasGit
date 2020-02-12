@@ -154,6 +154,7 @@ class _StoreBoxPageState extends State<StoreBoxPage> {
   }
 }
 
+
 class BottomWaveClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {

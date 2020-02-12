@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:project1/collectionDemo/studentCollectionDemo/addStudent.dart';
 import 'package:project1/collectionDemo/studentCollectionDemo/studentDate.dart';
+import 'package:project1/collectionDemo/studentCollectionDemo/studentView.dart';
 import 'package:project1/collectionDemo/studentCollectionDemo/studentedit.dart';
 
 class StudentList extends StatefulWidget {
@@ -63,13 +64,15 @@ class _StudentListState extends State<StudentList> {
             border: Border.all(color: Colors.grey),
             borderRadius: BorderRadius.circular(5.0)),
         child: ListTile(
+          leading: Text(student.roll.toString()),
           title: Text(student.sname),
+          subtitle: Text(student.per.toString()),
           trailing: GestureDetector(
             onTap: () {
               print(data.documentID);
-               Navigator.push(context, MaterialPageRoute(builder: (context)=>StudentEdit(data: data,)));
+               Navigator.push(context, MaterialPageRoute(builder: (context)=>StudentView(data: data,)));
             },
-            child: Icon(Icons.edit),
+            child: Icon(Icons.view_agenda),
           ),
           onTap: () => Firestore.instance.runTransaction((transaction) async {
             final freshSnapshot = await transaction.get(student.reference);

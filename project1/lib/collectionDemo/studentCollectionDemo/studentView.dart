@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:project1/collectionDemo/studentCollectionDemo/studentDate.dart';
-import 'package:project1/collectionDemo/studentCollectionDemo/studentList.dart';
-import 'package:project1/collectionDemo/studentCollectionDemo/studentView.dart';
+import 'package:project1/collectionDemo/studentCollectionDemo/studentedit.dart';
 
-class StudentEdit extends StatefulWidget {
+class StudentView extends StatefulWidget {
   DocumentSnapshot data;
-  StudentEdit({this.data});
+  StudentView({this.data});
   @override
-  _StudentEditState createState() => _StudentEditState();
+  _StudentViewState createState() => _StudentViewState();
 }
 
-class _StudentEditState extends State<StudentEdit> {
+class _StudentViewState extends State<StudentView> {
   TextEditingController snameController = TextEditingController();
   TextEditingController rolController = TextEditingController();
   TextEditingController m1Controller = TextEditingController();
@@ -36,12 +35,8 @@ class _StudentEditState extends State<StudentEdit> {
     m1Controller.text = student.m1.toString();
     m2Controller.text = student.m2.toString();
     m3Controller.text = student.m3.toString();
-
-    setState(() {
-      m1 = student.m1;
-      m2 = student.m2;
-      m3 = student.m3;
-    });
+    totalController.text = student.total.toString();
+    perController.text = student.per.toString();
   }
 
   @override
@@ -52,26 +47,29 @@ class _StudentEditState extends State<StudentEdit> {
         actions: <Widget>[
           InkWell(
             child: Container(
+              margin: EdgeInsets.all(10),
               child: Icon(Icons.delete),
             ),
             onTap: () {
               setState(() {
                 delete();
+                Navigator.pop(context);
               });
             },
           )
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          total = (m1 + m2 + m3);
-          per = total / 3;
-          edit();
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => StudentList()));
-        },
-        child: Icon(Icons.save),
-      ),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        setState(() {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => StudentEdit(
+                        data: widget.data,
+                      )));
+        });
+      },
+      child: Icon(Icons.edit),),
       body: Center(
         child: Container(
           margin: EdgeInsets.all(10),
@@ -80,12 +78,13 @@ class _StudentEditState extends State<StudentEdit> {
               Container(
                 child: TextField(
                   textAlign: TextAlign.center,
+                  enabled: false,
                   controller: rolController,
-                  // onChanged: (String s) {
-                  //   setState(() {
-                  //     roll = int.parse(s);
-                  //   });
-                  // },
+                  onChanged: (String s) {
+                    setState(() {
+                      roll = int.parse(s);
+                    });
+                  },
                   decoration: InputDecoration(
                       hintText: 'Roll no.',
                       border: OutlineInputBorder(
@@ -98,12 +97,13 @@ class _StudentEditState extends State<StudentEdit> {
               Container(
                 child: TextField(
                   textAlign: TextAlign.center,
+                  enabled: false,
                   controller: snameController,
-                  // onChanged: (String s) {
-                  //   setState(() {
-                  //     sname = s;
-                  //   });
-                  // },
+                  onChanged: (String s) {
+                    setState(() {
+                      sname = s;
+                    });
+                  },
                   decoration: InputDecoration(
                       hintText: 'Student Name',
                       border: OutlineInputBorder(
@@ -116,6 +116,7 @@ class _StudentEditState extends State<StudentEdit> {
               Container(
                 child: TextField(
                   textAlign: TextAlign.center,
+                  enabled: false,
                   controller: m1Controller,
                   onChanged: (String s) {
                     setState(() {
@@ -134,6 +135,7 @@ class _StudentEditState extends State<StudentEdit> {
               Container(
                 child: TextField(
                   textAlign: TextAlign.center,
+                  enabled: false,
                   controller: m2Controller,
                   onChanged: (String s) {
                     setState(() {
@@ -152,6 +154,7 @@ class _StudentEditState extends State<StudentEdit> {
               Container(
                 child: TextField(
                   textAlign: TextAlign.center,
+                  enabled: false,
                   controller: m3Controller,
                   onChanged: (String s) {
                     setState(() {
@@ -170,45 +173,45 @@ class _StudentEditState extends State<StudentEdit> {
               // Container(
               //   child: Text(student.total.toString()),
               // ),
-              // Container(
-              //   child: TextField(
-              //     controller: totalController,
-              //     enabled: true,
-              //     onChanged: (String s) {
-              //       setState(() {
-              //         total = int.parse(s);
-              //       });
-              //     },
-              //     decoration: InputDecoration(
-              //         hintText: 'Total',
-              //         border: OutlineInputBorder(
-              //             borderRadius: BorderRadius.circular(10))),
-              //   ),
-              // ),
+              Container(
+                child: TextField(
+                  textAlign: TextAlign.center,
+                  controller: totalController,
+                  enabled: false,
+                  onChanged: (String s) {
+                    setState(() {
+                      total = int.parse(s);
+                    });
+                  },
+                  decoration: InputDecoration(
+                      hintText: 'Total',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10))),
+                ),
+              ),
               SizedBox(
                 height: 5,
               ),
               // Container(
               //   child: Text(student.per.toString()),
               // ),
-              // Container(
-              //   child: TextField(
-              //     enabled: true,
-              //     controller: perController,
-              //     onChanged: (String s) {
-              //       setState(() {
-              //         per = double.parse(s);
-              //       });
-              //     },
-              //     decoration: InputDecoration(
-              //         hintText: 'per',
-              //         border: OutlineInputBorder(
-              //             borderRadius: BorderRadius.circular(10))),
-              //   ),
-              // ),
-              SizedBox(
-                height: 5,
+              Container(
+                child: TextField(
+                  textAlign: TextAlign.center,
+                  enabled: false,
+                  controller: perController,
+                  onChanged: (String s) {
+                    setState(() {
+                      per = double.parse(s);
+                    });
+                  },
+                  decoration: InputDecoration(
+                      hintText: 'per',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10))),
+                ),
               ),
+              
             ],
           ),
         ),
@@ -216,20 +219,20 @@ class _StudentEditState extends State<StudentEdit> {
     );
   }
 
-  void edit() {
-    Firestore.instance
-        .collection('StudentCollection1')
-        .document(widget.data.documentID)
-        .updateData({
-      // 'sname': sname,
-      'm1': m1,
-      'm2': m2,
-      'm3': m3,
-      'total': total,
-      'per': per,
-      // 'roll': roll
-    });
-  }
+  // void edit() {
+  //   Firestore.instance
+  //       .collection('StudentCollection1')
+  //       .document(widget.data.documentID)
+  //       .setData({
+  //     'sname': sname,
+  //     'm1': m1,
+  //     'm2': m2,
+  //     'm3': m3,
+  //     'total': total,
+  //     'per': per,
+  //     'roll': roll
+  //   });
+  // }
 
   void delete() async {
     Firestore.instance

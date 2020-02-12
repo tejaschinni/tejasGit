@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:project1/confirmPage.dart';
 import 'package:project1/constant.dart';
 import 'package:project1/dashBoardPage.dart';
 import 'package:project1/demo/demoPage.dart';
@@ -16,6 +17,9 @@ class _AuthPageState extends State<AuthPage> {
   GoogleSignInAccount _currentUser;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  String email = "";
+  String documentpath ;
   @override
   @override
   void initState() {
@@ -23,6 +27,9 @@ class _AuthPageState extends State<AuthPage> {
     _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
       setState(() {
         _currentUser = account;
+        email = account.email;
+        print("________________"+email);
+        documentpath = '/Customer/${email.toString()}';
       });
     });
     _googleSignIn.signInSilently();
@@ -33,7 +40,7 @@ class _AuthPageState extends State<AuthPage> {
               builder: (context) =>
                   DashBoardPage(_handleSignOut, _currentUser)));
     } else {
-      print('Log IN Failed');
+      // print('Log IN Failed');
     }
   }
 
@@ -42,10 +49,16 @@ class _AuthPageState extends State<AuthPage> {
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;
 
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => DashBoardPage(_handleSignOut, _currentUser)));
+    // Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (context) => DashBoardPage(_handleSignOut, _currentUser)));
+    // Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (context) => ConfirmPage(_handleSignOut, _currentUser)));
+
+      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>ConfirmPage(_handleSignOut,_currentUser,documentpath)));
 
     final AuthCredential credential = GoogleAuthProvider.getCredential(
       accessToken: googleAuth.accessToken,
