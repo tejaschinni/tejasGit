@@ -66,7 +66,7 @@ class _StudentListState extends State<StudentList> {
         child: ListTile(
           leading: Text(student.roll.toString()),
           title: Text(student.sname),
-          subtitle: Text(student.per.toString()),
+          
           trailing: GestureDetector(
             onTap: () {
               print(data.documentID);

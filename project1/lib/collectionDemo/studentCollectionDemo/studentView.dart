@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:project1/collectionDemo/studentCollectionDemo/addStudentEdu.dart';
 import 'package:project1/collectionDemo/studentCollectionDemo/studentDate.dart';
 import 'package:project1/collectionDemo/studentCollectionDemo/studentedit.dart';
 
@@ -22,7 +23,7 @@ class _StudentViewState extends State<StudentView> {
 
   String sname;
   int m1, m2, m3, roll, total;
-  double per;
+
   StudentData student;
 
   @override
@@ -36,7 +37,7 @@ class _StudentViewState extends State<StudentView> {
     m2Controller.text = student.m2.toString();
     m3Controller.text = student.m3.toString();
     totalController.text = student.total.toString();
-    perController.text = student.per.toString();
+    
   }
 
   @override
@@ -56,7 +57,18 @@ class _StudentViewState extends State<StudentView> {
                 Navigator.pop(context);
               });
             },
-          )
+          ),
+          InkWell(
+            child: Container(
+              margin: EdgeInsets.all(10),
+              child: Icon(Icons.add_box),
+            ),
+            onTap: () {
+              setState(() {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>AddStudentEdu(data: widget.data,)));
+              });
+            },
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(onPressed: () {
@@ -202,7 +214,7 @@ class _StudentViewState extends State<StudentView> {
                   controller: perController,
                   onChanged: (String s) {
                     setState(() {
-                      per = double.parse(s);
+                     
                     });
                   },
                   decoration: InputDecoration(
