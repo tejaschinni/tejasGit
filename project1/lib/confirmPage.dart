@@ -6,6 +6,7 @@ import 'package:project1/authPage.dart';
 import 'package:project1/constant.dart';
 import 'package:project1/createProfile.dart';
 import 'package:project1/customer.dart';
+import 'package:project1/customerDashBoard.dart';
 import 'package:project1/dashBoardPage.dart';
 
 class ConfirmPage extends StatefulWidget {
@@ -50,7 +51,7 @@ class _ConfirmPageState extends State<ConfirmPage> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (contex) => DashBoardPage(
+                  builder: (contex) => CustomerDashBoard(
                       widget.handleSignOut,
                       widget._currentUser)));
 
@@ -168,40 +169,31 @@ class _ConfirmPageState extends State<ConfirmPage> {
                       });
                     },
                   ),
-                  Container(
-                    child: TextField(
-                      controller: name,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    child: RaisedButton(
-                      child: Text('OK'),
-                      onPressed: () {
-                        setState(() {
-                          Firestore.instance
-                              .collection('Customer')
-                              .document(widget.documentPath)
-                              .get()
-                              .then((DocumentSnapshot ds) {
-                            if (ds.exists) {
-                              setState(() {
-                                name.text = 'Email Exists';
-                              });
-                            } else {
-                              setState(() {
-                                name.text = ds.documentID;
-                                print(userEmail);
-                              });
-                            }
-                          });
-                        });
-                      },
-                    ),
-                  )
+                  // Container(
+                  //   child: RaisedButton(
+                  //     child: Text('OK'),
+                  //     onPressed: () {
+                  //       setState(() {
+                  //         Firestore.instance
+                  //             .collection('Customer')
+                  //             .document(widget.documentPath)
+                  //             .get()
+                  //             .then((DocumentSnapshot ds) {
+                  //           if (ds.exists) {
+                  //             setState(() {
+                  //               name.text = 'Email Exists';
+                  //             });
+                  //           } else {
+                  //             setState(() {
+                  //               name.text = ds.documentID;
+                  //               print(userEmail);
+                  //             });
+                  //           }
+                  //         });
+                  //       });
+                  //     },
+                  //   ),
+                  // )
                 ],
               ),
             ),

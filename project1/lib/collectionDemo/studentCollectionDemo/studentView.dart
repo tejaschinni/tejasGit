@@ -20,9 +20,12 @@ class _StudentViewState extends State<StudentView> {
   TextEditingController rollController = TextEditingController();
   TextEditingController totalController = TextEditingController();
   TextEditingController perController = TextEditingController();
+  TextEditingController eduController = TextEditingController();
 
   String sname;
   int m1, m2, m3, roll, total;
+
+  List edu = new List();
 
   StudentData student;
 
@@ -37,7 +40,35 @@ class _StudentViewState extends State<StudentView> {
     m2Controller.text = student.m2.toString();
     m3Controller.text = student.m3.toString();
     totalController.text = student.total.toString();
-    
+
+    setState(() {});
+
+    fectchStudentdData();
+    loadStudent();
+  }
+
+  List education = new List();
+
+  loadStudent() {
+    Firestore.instance
+        .collection('StudentCollection1')
+        .document()
+        .get()
+        .then((DocumentSnapshot doc) {
+      print("----------------------" + education.length.toString());
+    });
+  }
+
+  fectchStudentdData() async {
+    final QuerySnapshot result = await Firestore.instance
+        .collection('StudentCollection1')
+        .getDocuments();
+
+    final List<DocumentSnapshot> document = result.documents;
+    document.forEach((data) {
+      final record = StudentData.fromSnapshot(data);
+      education.add(record);
+    });
   }
 
   @override
@@ -65,186 +96,97 @@ class _StudentViewState extends State<StudentView> {
             ),
             onTap: () {
               setState(() {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>AddStudentEdu(data: widget.data,)));
+                daigl();
               });
             },
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        setState(() {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => StudentEdit(
-                        data: widget.data,
-                      )));
-        });
-      },
-      child: Icon(Icons.edit),),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => StudentEdit(
+                          data: widget.data,
+                        )));
+          });
+        },
+        child: Icon(Icons.edit),
+      ),
       body: Center(
         child: Container(
           margin: EdgeInsets.all(10),
-          child: ListView(
-            children: <Widget>[
-              Container(
-                child: TextField(
-                  textAlign: TextAlign.center,
-                  enabled: false,
-                  controller: rolController,
-                  onChanged: (String s) {
-                    setState(() {
-                      roll = int.parse(s);
-                    });
+          child: ListView.builder(
+              itemCount: student.edu.length,
+              itemBuilder: (context, index) {
+                return Chip(
+                  onDeleted: (){
+                      delEdu(student.edu[index]);
                   },
-                  decoration: InputDecoration(
-                      hintText: 'Roll no.',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10))),
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Container(
-                child: TextField(
-                  textAlign: TextAlign.center,
-                  enabled: false,
-                  controller: snameController,
-                  onChanged: (String s) {
-                    setState(() {
-                      sname = s;
-                    });
-                  },
-                  decoration: InputDecoration(
-                      hintText: 'Student Name',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10))),
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Container(
-                child: TextField(
-                  textAlign: TextAlign.center,
-                  enabled: false,
-                  controller: m1Controller,
-                  onChanged: (String s) {
-                    setState(() {
-                      m1 = int.parse(s);
-                    });
-                  },
-                  decoration: InputDecoration(
-                      hintText: 'Marks 1',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10))),
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Container(
-                child: TextField(
-                  textAlign: TextAlign.center,
-                  enabled: false,
-                  controller: m2Controller,
-                  onChanged: (String s) {
-                    setState(() {
-                      m2 = int.parse(s);
-                    });
-                  },
-                  decoration: InputDecoration(
-                      hintText: 'Marks 2',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10))),
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Container(
-                child: TextField(
-                  textAlign: TextAlign.center,
-                  enabled: false,
-                  controller: m3Controller,
-                  onChanged: (String s) {
-                    setState(() {
-                      m3 = int.parse(s);
-                    });
-                  },
-                  decoration: InputDecoration(
-                      hintText: 'Marks 3',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10))),
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              // Container(
-              //   child: Text(student.total.toString()),
-              // ),
-              Container(
-                child: TextField(
-                  textAlign: TextAlign.center,
-                  controller: totalController,
-                  enabled: false,
-                  onChanged: (String s) {
-                    setState(() {
-                      total = int.parse(s);
-                    });
-                  },
-                  decoration: InputDecoration(
-                      hintText: 'Total',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10))),
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              // Container(
-              //   child: Text(student.per.toString()),
-              // ),
-              Container(
-                child: TextField(
-                  textAlign: TextAlign.center,
-                  enabled: false,
-                  controller: perController,
-                  onChanged: (String s) {
-                    setState(() {
-                     
-                    });
-                  },
-                  decoration: InputDecoration(
-                      hintText: 'per',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10))),
-                ),
-              ),
-              
-            ],
-          ),
+                  deleteIconColor: Colors.white,
+                  label: Text(
+                    student.edu[index],
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                  backgroundColor: Colors.red,
+                );
+              }),
         ),
       ),
     );
   }
 
   // void edit() {
+  //   List temp = List();
+
+  //   setState(() {
+  //     temp = student.edu;
+  //   });
+  //   print('==========$temp');
+  //   print(temp.length);
+
+  //   setState(() {
+  //     temp.add(student.edu);
+  //   });
+
   //   Firestore.instance
   //       .collection('StudentCollection1')
-  //       .document(widget.data.documentID)
-  //       .setData({
-  //     'sname': sname,
-  //     'm1': m1,
-  //     'm2': m2,
-  //     'm3': m3,
-  //     'total': total,
-  //     'per': per,
-  //     'roll': roll
+  //       .document(student.reference.documentID)
+  //       .updateData({
+  //     'edu': temp,
   //   });
+
+  //   print( student.edu);
   // }
+
+  void addEdu(String edu) {
+    List temp = new List();
+
+    setState(() {
+      temp.add(edu);
+    });
+
+    Firestore.instance
+        .collection('StudentCollection1')
+        .document(student.reference.documentID)
+        .updateData({'edu': FieldValue.arrayUnion(temp)});
+  }
+
+   void delEdu(String edu) {
+    List temp = new List();
+
+    setState(() {
+      temp.add(edu);
+    });
+
+    Firestore.instance
+        .collection('StudentCollection1')
+        .document(student.reference.documentID)
+        .updateData({'edu': FieldValue.arrayRemove(temp)});
+
+  }
 
   void delete() async {
     Firestore.instance
@@ -254,5 +196,62 @@ class _StudentViewState extends State<StudentView> {
         .catchError((onError) {
       print(onError);
     });
+  }
+
+  void daigl() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Add Education'),
+            content: Form(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: eduController,
+                      decoration: InputDecoration(
+                          labelText: 'Eduction',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10))),
+                    ),
+                  ),
+                  Center(
+                    child: Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: RaisedButton(
+                            child: Text("Submit"),
+                            onPressed: () {
+                              setState(() {
+                                addEdu(eduController.text);
+                                Navigator.pop(context);
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: RaisedButton(
+                            child: Text("Cancel"),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

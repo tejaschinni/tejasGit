@@ -11,24 +11,37 @@ class _AddStudentState extends State<AddStudent> {
   TextEditingController rolController = TextEditingController();
   TextEditingController m1Controller = TextEditingController();
   TextEditingController m2Controller = TextEditingController();
-  TextEditingController m3Controller = TextEditingController(); 
+  TextEditingController m3Controller = TextEditingController();
+  TextEditingController eduController = TextEditingController();
 
   String sname;
-  int m1,m2,m3,roll,total;
+  List edu = List();
+  int m1, m2, m3, roll, total;
   double per;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
-
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Add Student"),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.save),
+        onPressed: () {
+          setState(() {
+            total = (m1 + m2 + m3);
+            per = total / 3;
+            eduController.text = edu.toString();
+            insert();
+            Navigator.pop(context);
+          });
+        },
       ),
       body: Center(
         child: Container(
@@ -38,17 +51,15 @@ class _AddStudentState extends State<AddStudent> {
               Container(
                 child: TextField(
                   controller: rolController,
-                  onChanged: (String s){
+                  onChanged: (String s) {
                     setState(() {
                       roll = int.parse(s);
                     });
                   },
                   decoration: InputDecoration(
-                    hintText: 'Roll no.',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10)
-                    )
-                  ),
+                      hintText: 'Roll no.',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10))),
                 ),
               ),
               SizedBox(
@@ -57,17 +68,15 @@ class _AddStudentState extends State<AddStudent> {
               Container(
                 child: TextField(
                   controller: snameController,
-                  onChanged: (String s){
+                  onChanged: (String s) {
                     setState(() {
                       sname = s;
                     });
                   },
                   decoration: InputDecoration(
-                    hintText: 'Student Name',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10)
-                    )
-                  ),
+                      hintText: 'Student Name',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10))),
                 ),
               ),
               SizedBox(
@@ -76,17 +85,15 @@ class _AddStudentState extends State<AddStudent> {
               Container(
                 child: TextField(
                   controller: m1Controller,
-                  onChanged: (String s){
+                  onChanged: (String s) {
                     setState(() {
                       m1 = int.parse(s);
                     });
                   },
                   decoration: InputDecoration(
-                    hintText: 'Marks 1',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10)
-                    )
-                  ),
+                      hintText: 'Marks 1',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10))),
                 ),
               ),
               SizedBox(
@@ -95,17 +102,15 @@ class _AddStudentState extends State<AddStudent> {
               Container(
                 child: TextField(
                   controller: m2Controller,
-                  onChanged: (String s){
+                  onChanged: (String s) {
                     setState(() {
                       m2 = int.parse(s);
                     });
                   },
                   decoration: InputDecoration(
-                    hintText: 'Marks 2',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10)
-                    )
-                  ),
+                      hintText: 'Marks 2',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10))),
                 ),
               ),
               SizedBox(
@@ -114,34 +119,35 @@ class _AddStudentState extends State<AddStudent> {
               Container(
                 child: TextField(
                   controller: m3Controller,
-                  onChanged: (String s){
+                  onChanged: (String s) {
                     setState(() {
                       m3 = int.parse(s);
                     });
                   },
                   decoration: InputDecoration(
-                    hintText: 'Marks 3',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10)
-                    )
-                  ),
+                      hintText: 'Marks 3',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10))),
                 ),
               ),
               SizedBox(
                 height: 5,
               ),
+              SizedBox(
+                height: 5,
+              ),
               Container(
-                child: RaisedButton(
-                  onPressed: (){
-                    total = (m1+m2+m3);
-                    per = total/3;
-                    print(sname);
-                    print(roll);
-                    insert();
-                    Navigator.pop(context);
+                child: TextField(
+                  controller: eduController,
+                  onChanged: (String s) {
+                    setState(() {
+                    });
                   },
-                  child: Icon(Icons.save),
-                )
+                  decoration: InputDecoration(
+                      hintText: 'Education',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10))),
+                ),
               ),
             ],
           ),
@@ -149,7 +155,17 @@ class _AddStudentState extends State<AddStudent> {
       ),
     );
   }
-  void insert(){
-    Firestore.instance.collection('StudentCollection1').document().setData({'sname': sname,'m1':m1,'m2':m2,'m3':m3,'total':total,'per':per,'roll':roll});
+
+  void insert() {
+    Firestore.instance.collection('StudentCollection1').document().setData({
+      'sname': sname,
+      'm1': m1,
+      'm2': m2,
+      'm3': m3,
+      'total': total,
+      'per': per,
+      'roll': roll,
+      'edu': edu
+    });
   }
 }

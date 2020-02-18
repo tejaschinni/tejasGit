@@ -11,6 +11,7 @@ import 'package:project1/customerList.dart';
 import 'package:project1/dashBoardPage.dart';
 import 'package:project1/demo/cardDemo.dart';
 import 'package:project1/demo/clippingToolDemo.dart';
+import 'package:project1/demo/jsonExample.dart';
 import 'package:project1/demo/menuIcons.dart';
 import 'package:project1/demo/orignalSignInDemo.dart';
 import 'package:project1/demo/stackDemo.dart';
@@ -32,7 +33,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-           home: AddStudentEdu(),
+           home: AuthPage(),
     );
   }
 }
