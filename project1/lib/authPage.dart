@@ -33,31 +33,21 @@ class _AuthPageState extends State<AuthPage> {
       });
     });
     _googleSignIn.signInSilently();
-    if (_currentUser != null) {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  DashBoardPage(_handleSignOut, _currentUser)));
-    } else {
-      // print('Log IN Failed');
-    }
+    // if (_currentUser != null) {
+    //   Navigator.pushReplacement(
+    //       context,
+    //       MaterialPageRoute(
+    //           builder: (context) =>
+    //               DashBoardPage(_handleSignOut, _currentUser)));
+    // } else {
+    //   // print('Log IN Failed');
+    // }
   }
 
   Future<FirebaseUser> _handleSignIn() async {
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;
-
-    // Navigator.pushReplacement(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: (context) => DashBoardPage(_handleSignOut, _currentUser)));
-    // Navigator.pushReplacement(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: (context) => ConfirmPage(_handleSignOut, _currentUser)));
-
       Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>ConfirmPage(_handleSignOut,_currentUser,documentpath)));
 
     final AuthCredential credential = GoogleAuthProvider.getCredential(

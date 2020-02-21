@@ -9,7 +9,6 @@ import 'package:project1/demo/menuIcons.dart';
 import 'package:project1/listOfItemPage.dart';
 import 'package:project1/orderPage.dart';
 import 'package:project1/profilePage.dart';
-import 'package:project1/storeBox.dart';
 
 class DashBoardPage extends StatefulWidget {
   final Function handleSignOut;
@@ -91,7 +90,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                           builder: (context) => AuthPage()));
                 }
                 if(s == 'Profile'){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>StoreBoxPage()));
+                  // Navigator.push(context, MaterialPageRoute(builder: (context)=>()));
                 }
               },
             ),

@@ -1,20 +1,18 @@
-class ItemDataType{
-  int id;
-  String name;
-  int price;
 
-  ItemDataType({this.id,this.name,this.price});
 
-  ItemDataType.fromMap(Map<String, dynamic> map) {
-    id = map['id'];
-    name = map['name'];
-    price = map['price'];
-  }
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'name': name,
-      'price': price,
-    };
+class Items{
+  final String itemEnglishName;
+  final String itemsHindiName;
+  final String itemsMarathiName;
+
+
+  Items({this.itemEnglishName,this.itemsHindiName,this.itemsMarathiName});
+
+  factory Items.fromJson(Map<String,dynamic>json){
+    return Items(
+      itemEnglishName: json['itemEnglishName'] as String,
+      itemsHindiName: json['itemHindiName'] as String,
+      itemsMarathiName: json['itemMarathiName'] as String,
+    );
   }
 }

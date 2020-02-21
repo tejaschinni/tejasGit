@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project1/authPage.dart';
 import 'package:project1/constant.dart';
 import 'package:project1/createProfile.dart';
+import 'package:project1/createShopOwner.dart';
 import 'package:project1/customer.dart';
 import 'package:project1/customerDashBoard.dart';
 import 'package:project1/dashBoardPage.dart';
@@ -26,6 +28,7 @@ class _ConfirmPageState extends State<ConfirmPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   String customerprofile;
+  String path;
 
   @override
   void initState() {
@@ -36,11 +39,13 @@ class _ConfirmPageState extends State<ConfirmPage> {
           userEmail = user.email;
         }));
     setState(() {
-      print("------Doc Path------------" + widget.documentPath);
+      path = '/ShopOwner/${userEmail.toString()}';
+     
+     // print("------Doc Path------------" + widget.documentPath);
     });
   }
 
-  void getEmail() {
+  void getCustomerEmail() {
     setState(() {
       Firestore.instance
           .document(widget.documentPath)
@@ -66,17 +71,40 @@ class _ConfirmPageState extends State<ConfirmPage> {
 
         }
       });
-      // final snapShot =  Firestore.instance.collection('Customer').document(userEmail).get();
-
-      //   if(snapShot == null ){
-      //     print("=----------Email Null "+userEmail);
-      //   }
-      //   else
-      //   {
-      //     print("-------------------Email "+userEmail);
-      //   }
     });
   }
+
+
+  // void getShopOwnerEmail() {
+  //   setState(() {
+  //       print(path);
+  //       print(userEmail);
+  //     Firestore.instance
+  //         .document(widget.documentPath)
+  //         .get()
+  //         .then((DocumentSnapshot ds) {
+  //       if (ds.exists) {
+  //         print("__________true________________" + ds.documentID.toString());
+  //         Navigator.push(
+  //             context,
+  //             MaterialPageRoute(
+  //                 builder: (contex) => DashBoardPage(
+  //                     widget.handleSignOut,
+  //                     widget._currentUser)));
+
+  //       } else {
+  //         print("--Email Null--  " + ds.documentID.toString());
+  //         Navigator.push(
+  //             context,
+  //             MaterialPageRoute(
+  //                 builder: (context) => CreateShopOwner(
+  //                     widget.handleSignOut,
+  //                     widget._currentUser)));
+
+  //       }
+  //     });
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +169,7 @@ class _ConfirmPageState extends State<ConfirmPage> {
                           ),
                         )),
                     onTap: () {
-                      getEmail();
+                      getCustomerEmail();
                     },
                   ),
                   InkWell(
@@ -160,40 +188,11 @@ class _ConfirmPageState extends State<ConfirmPage> {
                         )),
                     onTap: () {
                       setState(() {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => DashBoardPage(
-                                    widget.handleSignOut,
-                                    widget._currentUser)));
+                      //  getShopOwnerEmail();
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage(widget.handleSignOut, widget._currentUser)));
                       });
                     },
                   ),
-                  // Container(
-                  //   child: RaisedButton(
-                  //     child: Text('OK'),
-                  //     onPressed: () {
-                  //       setState(() {
-                  //         Firestore.instance
-                  //             .collection('Customer')
-                  //             .document(widget.documentPath)
-                  //             .get()
-                  //             .then((DocumentSnapshot ds) {
-                  //           if (ds.exists) {
-                  //             setState(() {
-                  //               name.text = 'Email Exists';
-                  //             });
-                  //           } else {
-                  //             setState(() {
-                  //               name.text = ds.documentID;
-                  //               print(userEmail);
-                  //             });
-                  //           }
-                  //         });
-                  //       });
-                  //     },
-                  //   ),
-                  // )
                 ],
               ),
             ),
