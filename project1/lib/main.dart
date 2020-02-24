@@ -5,6 +5,7 @@ import 'package:project1/collectionDemo/addDataForCollection.dart';
 import 'package:project1/collectionDemo/listPage.dart';
 import 'package:project1/collectionDemo/studentCollectionDemo/addStudent.dart';
 import 'package:project1/collectionDemo/studentCollectionDemo/addStudentEdu.dart';
+import 'package:project1/collectionDemo/studentCollectionDemo/listWheelDtsudentdemo.dart';
 import 'package:project1/collectionDemo/studentCollectionDemo/studentDate.dart';
 import 'package:project1/collectionDemo/studentCollectionDemo/studentList.dart';
 import 'package:project1/confirmPage.dart';
@@ -36,7 +37,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-           home: JsonDemo2Itmes(),
+           home: ListWheelStudentDemo(),
     );
   }
 }
