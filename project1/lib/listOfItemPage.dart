@@ -1,10 +1,13 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project1/addItemsPage.dart';
 import 'package:project1/dashBoardPage.dart';
 import 'package:project1/demo/menuIcons.dart';
-import 'package:project1/items.dart';
+import 'package:http/http.dart' as http;
+import 'package:project1/litemDataType.dart';
 
 class ListOfItemPage extends StatefulWidget {
   final Function handleSignOut;
@@ -16,12 +19,29 @@ class ListOfItemPage extends StatefulWidget {
 
 class _ListOfItemPageState extends State<ListOfItemPage> {
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
- // List<ItemDataType> itemList = List();
+  //List<Items> itemList = List();
+
+  String itemEnglishName, itemQanity, itemPrice, itemUnit;
+
+  List<Items> parseItems(String responseBody) {
+    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+
+    return parsed.map<Items>((json) => Items.fromJson(json)).toList();
+  }
+
+  Future<List<Items>> fetchItems(http.Client client) async {
+    final response = await client.get(
+        'https://raw.githubusercontent.com/chetan2469/git/master/grocery_market/grocery.json');
+
+    return parseItems(response.body);
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    setState(() {});
   }
 
   @override
@@ -45,12 +65,15 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
           onPressed: () => _scaffoldkey.currentState.openDrawer(),
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        setState(() {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => AddItemsPage()));
-        });
-      },child: Icon(Icons.add),),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => AddItemsPage()));
+          });
+        },
+        child: Icon(Icons.add),
+      ),
       drawer: SafeArea(
         child: Theme(
           data: Theme.of(context).copyWith(
@@ -169,111 +192,50 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
           ),
         ),
       ),
-      body: _buildBody(context),
-      // body: Center(
-      //   child: Container(
-      //     child: ListView.builder(
-      //       itemCount: itemList.length,
-      //       itemBuilder: (context, index) {
-      //         return Center(
-      //           child: SizedBox(
-      //             child: Container(
-      //               decoration:
-      //                   BoxDecoration(borderRadius: BorderRadius.circular(10)),
-      //               child: ListView.builder(
-      //                 scrollDirection: Axis.vertical,
-      //                 shrinkWrap: true,
-      //                 itemCount: itemList.length,
-      //                 itemBuilder: (context, index) {
-      //                   return Container(
-      //                     margin: EdgeInsets.only(top: 5, left: 5, right: 5),
-      //                     decoration: BoxDecoration(
-      //                       color: Colors.grey.withOpacity(0.1),
-      //                       borderRadius: BorderRadius.circular(10),
-      //                       shape: BoxShape.rectangle,
-      //                     ),
-      //                     child: ListTile(
-      //                       leading: CircleAvatar(
-      //                         backgroundImage:
-      //                             AssetImage('assets/wallpaper.jpg'),
-      //                       ),
-      //                       title: Text(itemList[index].name),
-      //                       trailing: Container(
-      //                         height: 25,
-      //                         width: 69,
-      //                         child:
-      //                             Center(child: Text(itemList[index].price.toString())),
-      //                       ),
-      //                       onTap: () {},
-      //                     ),
-      //                   );
-      //                 },
-      //               ),
-      //             ),
-      //           ),
-      //         );
-      //       },
-      //     ),
-      //   ),
-      // ),
+      body: FutureBuilder<List<Items>>(
+        future: fetchItems(http.Client()),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) print(snapshot.error);
+
+          return snapshot.hasData
+              ? ItemList(item: snapshot.data)
+              : Center(child: CircularProgressIndicator());
+        },
+      ),
     );
   }
+}
 
-  Widget _buildBody(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('Items').snapshots(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) return LinearProgressIndicator();
+class ItemList extends StatelessWidget {
+  final List<Items> item;
 
-        return _buildList(context, snapshot.data.documents);
-      },
-    );
+  ItemList({Key key, this.item}) : super(key: key);
+
+  void putData() {}
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+        itemCount: item.length,
+        itemBuilder: (contex, index) {
+          return ListTile(
+            title: Text(item[index].itemEnglishName),
+            trailing: Text(item[index].itemQuantity.toString() + "\t" + item[index].itemUnite),
+            onTap: () {
+              insert();
+            },
+          );
+        });
   }
 
-  Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
-    return ListView(
-      padding: const EdgeInsets.only(top: 20.0),
-      children: snapshot.map((data) => _buildListItem(context, data)).toList(),
-    );
-  }
-
-  Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
-    final items = Items.fromSnapshot(data);
-
-    return Stack(
-      children: <Widget>[
-        Container(
-          margin: EdgeInsets.all(10),
-          // padding: EdgeInsets.only(top: 300),
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-          child: Column(
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(5.0)),
-                child: ListTile(
-                  title: Text(items.itemname),
-                  trailing: GestureDetector(
-                    onTap: () {
-                      print(data.documentID);
-                      //  Navigator.push(context, MaterialPageRoute(builder: (context)=>profileView(data: data,)));
-                    },
-                    child: Icon(Icons.view_agenda),
-                  ),
-                  onTap: () =>
-                      Firestore.instance.runTransaction((transaction) async {
-                    final freshSnapshot =
-                        await transaction.get(items.reference);
-                    final fresh = Items.fromSnapshot(freshSnapshot);
-                    // await transaction.update(profile.reference, {'votes':fresh.votes +1});
-                  }),
-                ),
-              ),
-            ],
-          ),
-        )
-      ],
-    );
+  void insert() {
+      for (var i = 0; i < item.length; i++) {
+        Firestore.instance.collection('ItemList').document().setData({
+                'itemEnglishName': item[i].itemEnglishName,
+                'itemsUnite': item[i].itemUnite,
+                'itemsQuantity': item[i].itemQuantity,
+              });
+        
+      }
   }
 }

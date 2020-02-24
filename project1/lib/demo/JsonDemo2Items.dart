@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -12,29 +11,26 @@ class JsonDemo2Itmes extends StatefulWidget {
 }
 
 class _JsonDemo2ItmesState extends State<JsonDemo2Itmes> {
-
 // A function that converts a response body into a List<Photo>.
-List<Photo> parsePhotos(String responseBody) {
-  final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+  List<Items> parseItems(String responseBody) {
+    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
 
-  return parsed.map<Photo>((json) => Photo.fromJson(json)).toList();
-}
+    return parsed.map<Items>((json) => Items.fromJson(json)).toList();
+  }
 
-Future<List<Photo>> fetchPhotos(http.Client client) async {
-  final response =
-      await client.get('https://jsonplaceholder.typicode.com/photos');
+  Future<List<Items>> fetchItems(http.Client client) async {
+    final response = await client.get(
+        'https://raw.githubusercontent.com/chetan2469/git/master/grocery_market/grocery.json');
 
-  return parsePhotos(response.body);
-}
-
-
+    return parseItems(response.body);
+  }
 
 //   List<Items> parseItem(String responseBody) {
 //   final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
 
 //   return parsed.map<Items>((json) => Items.fromJson(json)).toList();
 // }
-@override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -46,53 +42,44 @@ Future<List<Photo>> fetchPhotos(http.Client client) async {
       appBar: AppBar(
         title: Text('Json Demo'),
       ),
-      body: FutureBuilder<List<Photo>>(
-        future: fetchPhotos(http.Client()),
+      body: FutureBuilder<List<Items>>(
+        future: fetchItems(http.Client()),
         builder: (context, snapshot) {
           if (snapshot.hasError) print(snapshot.error);
 
           return snapshot.hasData
-              ? PhotosList(photos: snapshot.data)
+              ? PhotosList(item: snapshot.data)
               : Center(child: CircularProgressIndicator());
         },
       ),
     );
-    
   }
-  
 }
-class PhotosList extends StatelessWidget {
-  final List<Photo> photos;
 
-  PhotosList({Key key, this.photos}) : super(key: key);
+class PhotosList extends StatelessWidget {
+  final List<Items> item;
+  FixedExtentScrollController _controller = FixedExtentScrollController();
+
+  PhotosList({Key key, this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-      ),
-      itemCount: photos.length,
-      itemBuilder: (context, index) {
-        return Image.network(photos[index].thumbnailUrl);
-      },
-    );
-  }
-}
-
-
-class Photo {
-  final int id;
-  final String title;
-  final String thumbnailUrl;
-
-  Photo({this.id, this.title, this.thumbnailUrl});
-
-  factory Photo.fromJson(Map<String, dynamic> json) {
-    return Photo(
-      id: json['id'] as int,
-      title: json['title'] as String,
-      thumbnailUrl: json['thumbnailUrl'] as String,
-    );
+    return ListWheelScrollView(
+            controller: _controller,
+            offAxisFraction: -.5,
+            itemExtent: 200,
+            useMagnifier: true,
+            magnification: 3,
+            diameterRatio: 3,
+            physics: FixedExtentScrollPhysics(),
+            children: <Widget>[
+              ListView.builder(
+                itemCount: item.length,
+                itemBuilder: (contex, index){
+                  return Text(item[index].itemEnglishName);
+                }
+              )
+            ],
+          );
   }
 }
