@@ -8,6 +8,11 @@ class ListWheelsDemo extends StatefulWidget {
 class _ListWheelsDemoState extends State<ListWheelsDemo> {
   final FixedExtentScrollController _controller = FixedExtentScrollController();
 
+  List<String> stud = new List();
+
+  List<Widget> studentName = new List();
+  
+
   List<Widget> list = [
     ListTile(
       leading: Icon(Icons.add_a_photo),
@@ -81,6 +86,18 @@ class _ListWheelsDemoState extends State<ListWheelsDemo> {
     ),
     
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    stud = ["Tejas","Shumbham","Chinni","Sagar","Sam"];
+
+    for (var item in stud) {
+      studentName.add(Container(child: Text(item.toString()),));      
+      
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,8 +112,16 @@ class _ListWheelsDemoState extends State<ListWheelsDemo> {
         magnification: 1.2,
         diameterRatio: 3,
         physics: FixedExtentScrollPhysics(),
-        children: list,
-      )
+        children: studentName.map((student){
+          return Container(
+            child:ListTile(
+              leading:Text(student.toString()),
+              // title: Text(std.name),
+              // trailing: Text(std.marks.toString()),
+            ),
+          );
+        }).toList(),
+      ),
     );
   }
 }

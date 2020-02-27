@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -7,6 +6,7 @@ import 'package:project1/addItemsPage.dart';
 import 'package:project1/dashBoardPage.dart';
 import 'package:project1/demo/menuIcons.dart';
 import 'package:http/http.dart' as http;
+import 'package:project1/itemFirebaseData.dart';
 import 'package:project1/litemDataType.dart';
 
 class ListOfItemPage extends StatefulWidget {
@@ -21,7 +21,10 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   //List<Items> itemList = List();
 
+
   String itemEnglishName, itemQanity, itemPrice, itemUnit;
+
+  List<ItemsFirebase> itemFireData = new List();
 
   List<Items> parseItems(String responseBody) {
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
@@ -41,7 +44,8 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
     // TODO: implement initState
     super.initState();
 
-    setState(() {});
+    setState(() {
+    });
   }
 
   @override
@@ -57,6 +61,18 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
             child: Icon(
               Icons.search,
               size: 30,
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: InkWell(
+              onTap: (){
+                
+              },
+              child: Icon(
+                Icons.insert_drive_file,
+                size: 30,
+              ),
             ),
           )
         ],
@@ -196,6 +212,7 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
         future: fetchItems(http.Client()),
         builder: (context, snapshot) {
           if (snapshot.hasError) print(snapshot.error);
+          
 
           return snapshot.hasData
               ? ItemList(item: snapshot.data)
@@ -208,8 +225,17 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
 
 class ItemList extends StatelessWidget {
   final List<Items> item;
-
   ItemList({Key key, this.item}) : super(key: key);
+
+void insert() {
+    for (var i = 0; i < item.length; i++) {
+      Firestore.instance.collection('itemList').document().setData({
+        'itemEnglishName': item[i].itemEnglishName,
+        'itemsUnite': item[i].itemUnite,
+        'itemsQuantity': item[i].itemQuantity,
+      });
+    }
+  }
 
   void putData() {}
 
@@ -220,22 +246,23 @@ class ItemList extends StatelessWidget {
         itemBuilder: (contex, index) {
           return ListTile(
             title: Text(item[index].itemEnglishName),
-            trailing: Text(item[index].itemQuantity.toString() + "\t" + item[index].itemUnite),
+            trailing: Text(item[index].itemQuantity.toString() +
+                "\t" +
+                item[index].itemUnite),
             onTap: () {
-              insert();
+            // insert();
+            Navigator.push(context, MaterialPageRoute(builder: (contex)=>AddItemsPage(items: item,)));
+            
+            getdata();
             },
           );
         });
   }
 
-  void insert() {
-      for (var i = 0; i < item.length; i++) {
-        Firestore.instance.collection('ItemList').document().setData({
-                'itemEnglishName': item[i].itemEnglishName,
-                'itemsUnite': item[i].itemUnite,
-                'itemsQuantity': item[i].itemQuantity,
-              });
-        
-      }
+  
+
+  void getdata()async{
+   
+   
   }
 }

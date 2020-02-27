@@ -1,22 +1,43 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:project1/listOfItemPage.dart';
+import 'package:project1/litemDataType.dart';
 
 class AddItemsPage extends StatefulWidget {
+  
+ final List<Items> items;
+  AddItemsPage({this.items});
+
   @override
   _AddItemsPageState createState() => _AddItemsPageState();
 }
 
 class _AddItemsPageState extends State<AddItemsPage> {
-  TextEditingController itemNameController = TextEditingController();
+  TextEditingController itemHindiNameController = TextEditingController();
   TextEditingController itemunitController = TextEditingController();
   TextEditingController itempriceController = TextEditingController();
+  TextEditingController itemEnglishNameController = TextEditingController();
+  TextEditingController itemMarathiNameController = TextEditingController();
 
-  String itemname, unit, price;
+  String itemEnglishName, unit, price,itemMarathiName,itemHindiName,listitem;
+  //Items items;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    
+    setState(() {
+      for (var i = 0; i < widget.items.length; i++) {
+       // itemEnglishName = widget.items[i].itemEnglishName;   
+        print(widget.items[i].itemEnglishName);     
+      }
+    
+    });
+
+    print('Items Number '+widget.items.length.toString());
+    
+   // print(itemlist.toString());
   }
 
   @override
@@ -31,7 +52,7 @@ class _AddItemsPageState extends State<AddItemsPage> {
             insert();
             itempriceController.text = '';
             itemunitController.text = '';
-            itemNameController.text = '';
+            itemEnglishNameController.text = '';
           });
         },
         child: Icon(Icons.save),
@@ -43,14 +64,48 @@ class _AddItemsPageState extends State<AddItemsPage> {
             children: <Widget>[
               Container(
                 child: TextField(
-                  controller: itemNameController,
+                  controller: itemEnglishNameController,
                   onChanged: (String s){
                     setState(() {
-                      itemname = s;
+                      itemEnglishName = s;
                     });
                   },
                   decoration: InputDecoration(
                     hintText: 'Items Name',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10))),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                child: TextField(
+                  controller: itemMarathiNameController,
+                  onChanged: (String s){
+                    setState(() {
+                      itemMarathiName = s;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'ItemMarathi Name',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10))),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                child: TextField(
+                  controller: itemHindiNameController,
+                  onChanged: (String s){
+                    setState(() {
+                      itemHindiName = s;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Item Hindi Name',
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10))),
                 ),
@@ -100,6 +155,6 @@ class _AddItemsPageState extends State<AddItemsPage> {
     Firestore.instance
         .collection('Items')
         .document()
-        .setData({'itemname': itemname, 'unit': unit, 'price': price});
+        .setData({'itemname': itemEnglishName, 'unit': unit, 'price': price});
   }
 }

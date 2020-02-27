@@ -12,7 +12,36 @@ class ListWheelStudentDemo extends StatefulWidget {
 
 class _StudentListState extends State<ListWheelStudentDemo> {
   final FixedExtentScrollController _controller = FixedExtentScrollController();
-  
+
+  List<StudentData> studentName = new List();
+  List<Widget> stud = new List();
+
+
+  void fetchStudentData()async{
+    setState(() {
+      studentName.clear();
+    });
+    final QuerySnapshot result = await Firestore.instance.collection('StudentCollection1').getDocuments();
+
+    final List<DocumentSnapshot> documents = result.documents;
+
+    documents.forEach((data){
+    final recor = StudentData.fromSnapshot(data);
+    studentName.add(recor);
+
+    return recor;
+  });
+  print(studentName.length);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+   fetchStudentData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,52 +80,66 @@ class _StudentListState extends State<ListWheelStudentDemo> {
       padding: const EdgeInsets.only(top: 20.0),
       children: snapshot.map((data) => _buildListItem(context, data)).toList(),
     );
+    
   }
+
+  
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
     final student = StudentData.fromSnapshot(data);
-    List<Widget> student1 = [
-    ListTile(
-        title: Text(student.sname),
-      )
-  ];
 
-    // return Padding(
-    //   // key: ValueKey(student.sname),
-    //   padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-    //   child: Container(
-    //     decoration: BoxDecoration(
-    //         border: Border.all(color: Colors.grey),
-    //         borderRadius: BorderRadius.circular(5.0)),
-    //     child: ListTile(
-    //       leading: Text(student.roll.toString()),
-    //       title: Text(student.sname),
+    print('Student Name length' + '\t' + studentName.length.toString());
+    return Padding(
+      // key: ValueKey(student.sname),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      child: Container(
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey),
+            borderRadius: BorderRadius.circular(5.0)),
+        child: 
+        ListTile(
+          leading: Text(student.roll.toString()),
+          title: Text(student.sname),
 
-    //       trailing: GestureDetector(
-    //         onTap: () {
-    //           print(data.documentID);
-    //            Navigator.push(context, MaterialPageRoute(builder: (context)=>StudentView(data: data,)));
-    //         },
-    //         child: Icon(Icons.view_agenda),
-    //       ),
-    //       onTap: () => Firestore.instance.runTransaction((transaction) async {
-    //         final freshSnapshot = await transaction.get(student.reference);
-    //         final fresh = StudentData.fromSnapshot(freshSnapshot);
-    //         // await transaction.update(student.reference, {'votes':fresh.votes +1});
-    //       }),
-    //     ),
-    //   ),
-    // );
-
-    return ListWheelScrollView(
-    controller: _controller,
-    useMagnifier: true,
-    offAxisFraction: -.3,
-    magnification: 1.2,
-    diameterRatio: 2.4,
-    physics: FixedExtentScrollPhysics(),
-    itemExtent: 80,
-    children: student1,
+          trailing: GestureDetector(
+            onTap: () {
+              print(data.documentID);
+               Navigator.push(context, MaterialPageRoute(builder: (context)=>StudentView(data: data,)));
+            },
+            child: Icon(Icons.view_agenda),
+          ),
+          onTap: () => Firestore.instance.runTransaction((transaction) async {
+            final freshSnapshot = await transaction.get(student.reference);
+            final fresh = StudentData.fromSnapshot(freshSnapshot);
+            // await transaction.update(student.reference, {'votes':fresh.votes +1});
+          }),
+        ),
+      ),
     );
+    
+
+    // return ListWheelScrollView(
+    // controller: _controller,
+    // useMagnifier: true,
+    // offAxisFraction: -.3,
+    // magnification: 1.2,
+    // diameterRatio: 2.4,
+    // physics: FixedExtentScrollPhysics(),
+    // itemExtent: 80,
+    // children: studentName,
+    // );
   }
+  
 }
+
+
+// slist.map((std){
+//           return Container(
+//             child:ListTile(
+//               leading:Text(std.rollno.toString()),
+//               title: Text(std.name),
+//               trailing: Text(std.marks.toString()),
+//             ),
+//           );
+//         }).toList(),
+//       ),

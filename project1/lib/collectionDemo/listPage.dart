@@ -11,6 +11,9 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
+  
+  final FixedExtentScrollController _controller = FixedExtentScrollController();
+  List<Widget> recordname = new List();
   @override
   
   
@@ -40,7 +43,8 @@ class _ListPageState extends State<ListPage> {
       builder: (context,snapshot){
         if(!snapshot.hasData)return LinearProgressIndicator();
 
-        return _buildList(context ,snapshot.data.documents);
+        return 
+        _buildList(context ,snapshot.data.documents);
       },
     );
   }
