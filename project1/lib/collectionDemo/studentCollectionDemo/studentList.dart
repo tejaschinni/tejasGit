@@ -4,6 +4,7 @@ import 'package:project1/collectionDemo/studentCollectionDemo/addStudent.dart';
 import 'package:project1/collectionDemo/studentCollectionDemo/studentDate.dart';
 import 'package:project1/collectionDemo/studentCollectionDemo/studentView.dart';
 import 'package:project1/collectionDemo/studentCollectionDemo/studentedit.dart';
+import 'package:project1/itemFirebaseData.dart';
 
 class StudentList extends StatefulWidget {
   @override
@@ -36,7 +37,7 @@ class _StudentListState extends State<StudentList> {
   Widget _buildBody(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: Firestore.instance
-          .collection('StudentCollection1')
+          .collection('itemList')
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) return LinearProgressIndicator();
@@ -54,7 +55,7 @@ class _StudentListState extends State<StudentList> {
   }
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
-    final student = StudentData.fromSnapshot(data);
+    final student = ItemsFirebase.fromSnapshot(data);
 
     return Padding(
       // key: ValueKey(student.sname),
@@ -64,8 +65,8 @@ class _StudentListState extends State<StudentList> {
             border: Border.all(color: Colors.grey),
             borderRadius: BorderRadius.circular(5.0)),
         child: ListTile(
-          leading: Text(student.roll.toString()),
-          title: Text(student.sname),
+          leading: Text(student.itemEnglishName),
+          title: Text(student.itemsQuantity.toString()),
           
           trailing: GestureDetector(
             onTap: () {
@@ -76,7 +77,7 @@ class _StudentListState extends State<StudentList> {
           ),
           onTap: () => Firestore.instance.runTransaction((transaction) async {
             final freshSnapshot = await transaction.get(student.reference);
-            final fresh = StudentData.fromSnapshot(freshSnapshot);
+            final fresh = ItemsFirebase.fromSnapshot(freshSnapshot);
             // await transaction.update(student.reference, {'votes':fresh.votes +1});
           }),
         ),

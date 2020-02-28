@@ -58,28 +58,17 @@ class _JsonDemo2ItmesState extends State<JsonDemo2Itmes> {
 
 class PhotosList extends StatelessWidget {
   final List<Items> item;
-  FixedExtentScrollController _controller = FixedExtentScrollController();
 
   PhotosList({Key key, this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListWheelScrollView(
-            controller: _controller,
-            offAxisFraction: -.5,
-            itemExtent: 200,
-            useMagnifier: true,
-            magnification: 3,
-            diameterRatio: 3,
-            physics: FixedExtentScrollPhysics(),
-            children: <Widget>[
-              ListView.builder(
-                itemCount: item.length,
-                itemBuilder: (contex, index){
-                  return Text(item[index].itemEnglishName);
-                }
-              )
-            ],
-          );
+    return ListView.builder(
+      itemCount: item.length,
+      itemBuilder: (contex,index){
+        return ListTile(
+          title: Text(item[index].itemEnglishName),
+        );
+    });
   }
 }

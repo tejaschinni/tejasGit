@@ -21,7 +21,6 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   //List<Items> itemList = List();
 
-
   String itemEnglishName, itemQanity, itemPrice, itemUnit;
 
   List<ItemsFirebase> itemFireData = new List();
@@ -44,8 +43,7 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
     // TODO: implement initState
     super.initState();
 
-    setState(() {
-    });
+    setState(() {});
   }
 
   @override
@@ -66,9 +64,7 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
           Container(
             margin: EdgeInsets.all(10),
             child: InkWell(
-              onTap: (){
-                
-              },
+              onTap: () {},
               child: Icon(
                 Icons.insert_drive_file,
                 size: 30,
@@ -212,10 +208,9 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
         future: fetchItems(http.Client()),
         builder: (context, snapshot) {
           if (snapshot.hasError) print(snapshot.error);
-          
 
           return snapshot.hasData
-              ? ItemList(item: snapshot.data)
+              ? ItemsList(item: snapshot.data)
               : Center(child: CircularProgressIndicator());
         },
       ),
@@ -223,46 +218,93 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
   }
 }
 
-class ItemList extends StatelessWidget {
+class ItemsList extends StatelessWidget {
   final List<Items> item;
-  ItemList({Key key, this.item}) : super(key: key);
 
-void insert() {
+  ItemsList({Key key, this.item}) : super(key: key);
+
+  void insert() {
     for (var i = 0; i < item.length; i++) {
-      Firestore.instance.collection('itemList').document().setData({
+      if(true){
+        Firestore.instance.collection('itemList').document().setData({
         'itemEnglishName': item[i].itemEnglishName,
+        'itemHindiName': item[i].itemHindiName,
+        'itemMarathiName': item[i].itemMarathiName,
         'itemsUnite': item[i].itemUnite,
         'itemsQuantity': item[i].itemQuantity,
       });
+      }
     }
   }
 
-  void putData() {}
-
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: item.length,
-        itemBuilder: (contex, index) {
-          return ListTile(
-            title: Text(item[index].itemEnglishName),
-            trailing: Text(item[index].itemQuantity.toString() +
-                "\t" +
-                item[index].itemUnite),
-            onTap: () {
-            // insert();
-            Navigator.push(context, MaterialPageRoute(builder: (contex)=>AddItemsPage(items: item,)));
-            
-            getdata();
-            },
-          );
-        });
-  }
+    return _buildBody(context);
+  //   ListView.builder(
+  //       itemCount: item.length,
+  //       itemBuilder: (contex, index) {
+  //         return
+  //             ListTile(
+  //           title: Text(item[index].itemEnglishName),
+  //           onTap: () {
+  //             insert();
+  //           },
+  //         );
+  //       });
+  // }
+}
 
-  
+Widget _buildBody(BuildContext context) {
+  return StreamBuilder<QuerySnapshot>(
+    stream: Firestore.instance.collection('itemList').snapshots(),
+    builder: (context, snapshot) {
+      if (!snapshot.hasData) return LinearProgressIndicator();
 
-  void getdata()async{
-   
-   
-  }
+      return _buildList(context, snapshot.data.documents);
+    },
+  );
+}
+
+Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
+  return ListView(
+    padding: const EdgeInsets.only(top: 20.0),
+    children: snapshot.map((data) => _buildListItem(context, data)).toList(),
+  );
+}
+
+Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
+  final listitems = ItemsFirebase.fromSnapshot(data);
+
+  return Padding(
+    // key: ValueKey(student.sname),
+    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+    child: Container(
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(5.0)),
+      child: ListTile(
+        leading: Text(listitems.itemEnglishName),
+        title: Text(listitems.itemMarathiName.toString() +'/'+ listitems.itemHindiName),
+        subtitle: Text( listitems.itemsQuantity.toString()+'\t'+listitems.itemsUnite ),
+        trailing: GestureDetector(
+          onTap: () {
+            print(data.documentID);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => AddItemsPage(
+                          data: data,
+                        )));
+          },
+          child: Icon(Icons.view_agenda),
+        ),
+        onTap: () => Firestore.instance.runTransaction((transaction) async {
+          final freshSnapshot = await transaction.get(listitems.reference);
+          final fresh = ItemsFirebase.fromSnapshot(freshSnapshot);
+          // await transaction.update(student.reference, {'votes':fresh.votes +1});
+        }),
+      ),
+    ),
+  );
+}
 }

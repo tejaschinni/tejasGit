@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:project1/itemFirebaseData.dart';
 import 'package:project1/listOfItemPage.dart';
 import 'package:project1/litemDataType.dart';
 
 class AddItemsPage extends StatefulWidget {
   
- final List<Items> items;
-  AddItemsPage({this.items});
+  DocumentSnapshot data;
+  AddItemsPage({this.data});
 
   @override
   _AddItemsPageState createState() => _AddItemsPageState();
@@ -14,29 +15,31 @@ class AddItemsPage extends StatefulWidget {
 
 class _AddItemsPageState extends State<AddItemsPage> {
   TextEditingController itemHindiNameController = TextEditingController();
-  TextEditingController itemunitController = TextEditingController();
-  TextEditingController itempriceController = TextEditingController();
+  TextEditingController itemUnitController = TextEditingController();
+  TextEditingController itemQuantityController = TextEditingController();
   TextEditingController itemEnglishNameController = TextEditingController();
   TextEditingController itemMarathiNameController = TextEditingController();
 
-  String itemEnglishName, unit, price,itemMarathiName,itemHindiName,listitem;
+  String itemEnglishName, unit,itemMarathiName,itemHindiName,quantity,price;
   //Items items;
+
+  ItemsFirebase itemsFirebase;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    
+    final listitem = ItemsFirebase.fromSnapshot(widget.data);
+    itemHindiNameController.text = listitem.itemHindiName;
+    itemEnglishNameController.text = listitem.itemEnglishName;
+    itemMarathiNameController.text = listitem.itemMarathiName;
+    itemQuantityController.text = listitem.itemsQuantity.toString();
+    itemUnitController.text = listitem.itemsUnite;
+
     setState(() {
-      for (var i = 0; i < widget.items.length; i++) {
-       // itemEnglishName = widget.items[i].itemEnglishName;   
-        print(widget.items[i].itemEnglishName);     
-      }
-    
+      price = '0';
     });
 
-    print('Items Number '+widget.items.length.toString());
-    
    // print(itemlist.toString());
   }
 
@@ -49,10 +52,10 @@ class _AddItemsPageState extends State<AddItemsPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
-            insert();
-            itempriceController.text = '';
-            itemunitController.text = '';
-            itemEnglishNameController.text = '';
+           // insert();
+            // itemQuantityController.text = '';
+            // itemUnitController.text = '';
+            // itemEnglishNameController.text = '';
           });
         },
         child: Icon(Icons.save),
@@ -115,7 +118,7 @@ class _AddItemsPageState extends State<AddItemsPage> {
               ),
               Container(
                 child: TextField(
-                  controller: itemunitController,
+                  controller: itemUnitController,
                   onChanged: (String s){
                     setState(() {
                       unit = s;
@@ -132,14 +135,14 @@ class _AddItemsPageState extends State<AddItemsPage> {
               ),
               Container(
                 child: TextField(
-                  controller: itempriceController,
+                  controller: itemQuantityController,
                   onChanged: (String s){
                     setState(() {
-                      price = s;
+                      quantity = s;
                     });
                   },
                   decoration: InputDecoration(
-                    hintText: 'price',
+                    hintText: 'Quantity',
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10))),
                 ),
@@ -152,9 +155,9 @@ class _AddItemsPageState extends State<AddItemsPage> {
   }
 
   void insert() {
-    Firestore.instance
-        .collection('Items')
-        .document()
-        .setData({'itemname': itemEnglishName, 'unit': unit, 'price': price});
+    // Firestore.instance
+    //     .collection('Items')
+    //     .document()
+    //     .setData({'itemname': itemEnglishName, 'unit': unit, 'price': price});
   }
 }
