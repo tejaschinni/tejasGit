@@ -4,43 +4,49 @@ import 'package:project1/itemFirebaseData.dart';
 import 'package:project1/listOfItemPage.dart';
 import 'package:project1/litemDataType.dart';
 
-class AddItemsPage extends StatefulWidget {
-  
-  DocumentSnapshot data;
-  AddItemsPage({this.data});
+class AddItemPage extends StatefulWidget {
+  // DocumentSnapshot data;
+  // AddItemPage({this.data});
 
   @override
-  _AddItemsPageState createState() => _AddItemsPageState();
+  _AddItemPageState createState() => _AddItemPageState();
 }
 
-class _AddItemsPageState extends State<AddItemsPage> {
+class _AddItemPageState extends State<AddItemPage> {
   TextEditingController itemHindiNameController = TextEditingController();
   TextEditingController itemUnitController = TextEditingController();
   TextEditingController itemQuantityController = TextEditingController();
   TextEditingController itemEnglishNameController = TextEditingController();
   TextEditingController itemMarathiNameController = TextEditingController();
+  TextEditingController itemPriceController = TextEditingController();
 
-  String itemEnglishName, unit,itemMarathiName,itemHindiName,quantity,price;
+  String itemEnglishName, unit, itemMarathiName, itemHindiName,  price;
+  double quantity ; 
   //Items items;
 
-  ItemsFirebase itemsFirebase;
+  // ItemsFirebase itemsFirebase;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    final listitem = ItemsFirebase.fromSnapshot(widget.data);
-    itemHindiNameController.text = listitem.itemHindiName;
-    itemEnglishNameController.text = listitem.itemEnglishName;
-    itemMarathiNameController.text = listitem.itemMarathiName;
-    itemQuantityController.text = listitem.itemsQuantity.toString();
-    itemUnitController.text = listitem.itemsUnite;
+    // final listitem = ItemsFirebase.fromSnapshot(widget.data);
+    // itemHindiNameController.text = listitem.itemHindiName;
+    // itemEnglishNameController.text = listitem.itemEnglishName;
+    // itemMarathiNameController.text = listitem.itemMarathiName;
+    // itemQuantityController.text = listitem.itemsQuantity.toString();
+    // itemUnitController.text = listitem.itemsUnite;
 
     setState(() {
-      price = '0';
+      // itemEnglishName = listitem.itemEnglishName;
+      // itemMarathiName = listitem.itemMarathiName;
+      // itemHindiName = listitem.itemHindiName;
+      // quantity = listitem.itemsQuantity.toString();
+      // unit = listitem.itemsUnite;
+      // price = listitem.itemPrice;
     });
 
-   // print(itemlist.toString());
+    // print(itemlist.toString());
   }
 
   @override
@@ -48,11 +54,14 @@ class _AddItemsPageState extends State<AddItemsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Items '),
+        actions: <Widget>[],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
-           // insert();
+            insert();
+
+            Navigator.pop(context);
             // itemQuantityController.text = '';
             // itemUnitController.text = '';
             // itemEnglishNameController.text = '';
@@ -68,13 +77,13 @@ class _AddItemsPageState extends State<AddItemsPage> {
               Container(
                 child: TextField(
                   controller: itemEnglishNameController,
-                  onChanged: (String s){
+                  onChanged: (String s) {
                     setState(() {
                       itemEnglishName = s;
                     });
                   },
                   decoration: InputDecoration(
-                    hintText: 'Items Name',
+                      hintText: 'Items Name',
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10))),
                 ),
@@ -85,13 +94,13 @@ class _AddItemsPageState extends State<AddItemsPage> {
               Container(
                 child: TextField(
                   controller: itemMarathiNameController,
-                  onChanged: (String s){
+                  onChanged: (String s) {
                     setState(() {
                       itemMarathiName = s;
                     });
                   },
                   decoration: InputDecoration(
-                    hintText: 'ItemMarathi Name',
+                      hintText: 'ItemMarathi Name',
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10))),
                 ),
@@ -102,13 +111,13 @@ class _AddItemsPageState extends State<AddItemsPage> {
               Container(
                 child: TextField(
                   controller: itemHindiNameController,
-                  onChanged: (String s){
+                  onChanged: (String s) {
                     setState(() {
                       itemHindiName = s;
                     });
                   },
                   decoration: InputDecoration(
-                    hintText: 'Item Hindi Name',
+                      hintText: 'Item Hindi Name',
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10))),
                 ),
@@ -119,13 +128,13 @@ class _AddItemsPageState extends State<AddItemsPage> {
               Container(
                 child: TextField(
                   controller: itemUnitController,
-                  onChanged: (String s){
+                  onChanged: (String s) {
                     setState(() {
                       unit = s;
                     });
                   },
                   decoration: InputDecoration(
-                    hintText: 'unit',
+                      hintText: 'unit',
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10))),
                 ),
@@ -136,13 +145,27 @@ class _AddItemsPageState extends State<AddItemsPage> {
               Container(
                 child: TextField(
                   controller: itemQuantityController,
-                  onChanged: (String s){
+                  onChanged: (String s) {
                     setState(() {
-                      quantity = s;
+                      quantity = double.parse(s);
                     });
                   },
                   decoration: InputDecoration(
-                    hintText: 'Quantity',
+                      hintText: 'Quantity',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10))),
+                ),
+              ),
+              Container(
+                child: TextField(
+                  controller: itemPriceController,
+                  onChanged: (String s) {
+                    setState(() {
+                      price = s;
+                    });
+                  },
+                  decoration: InputDecoration(
+                      hintText: 'Price',
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10))),
                 ),
@@ -155,9 +178,14 @@ class _AddItemsPageState extends State<AddItemsPage> {
   }
 
   void insert() {
-    // Firestore.instance
-    //     .collection('Items')
-    //     .document()
-    //     .setData({'itemname': itemEnglishName, 'unit': unit, 'price': price});
+    Firestore.instance.collection('itemList').document().setData({
+      'itemEnglishName': itemEnglishName,
+      'itemMarathiName': itemMarathiName,
+      'itemHindiName': itemHindiName,
+      'itemsUnite': unit,
+      'itemPrice': price,
+      'itemsQuantity':quantity
+    });
+    print("inserted");
   }
 }

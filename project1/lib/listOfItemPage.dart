@@ -2,10 +2,11 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:project1/addItemsPage.dart';
+import 'package:project1/addItemPage.dart';
 import 'package:project1/dashBoardPage.dart';
 import 'package:project1/demo/menuIcons.dart';
 import 'package:http/http.dart' as http;
+import 'package:project1/editItemPage.dart';
 import 'package:project1/itemFirebaseData.dart';
 import 'package:project1/litemDataType.dart';
 
@@ -64,7 +65,9 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
           Container(
             margin: EdgeInsets.all(10),
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                setState(() {});
+              },
               child: Icon(
                 Icons.insert_drive_file,
                 size: 30,
@@ -81,7 +84,7 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
         onPressed: () {
           setState(() {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => AddItemsPage()));
+                MaterialPageRoute(builder: (context) => AddItemPage()));
           });
         },
         child: Icon(Icons.add),
@@ -225,86 +228,103 @@ class ItemsList extends StatelessWidget {
 
   void insert() {
     for (var i = 0; i < item.length; i++) {
-      if(true){
-        Firestore.instance.collection('itemList').document().setData({
+      Firestore.instance.collection('itemList').document().setData({
         'itemEnglishName': item[i].itemEnglishName,
         'itemHindiName': item[i].itemHindiName,
         'itemMarathiName': item[i].itemMarathiName,
         'itemsUnite': item[i].itemUnite,
         'itemsQuantity': item[i].itemQuantity,
+        'itemPrice': item[i].itemPrice,
       });
-      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return _buildBody(context);
-  //   ListView.builder(
-  //       itemCount: item.length,
-  //       itemBuilder: (contex, index) {
-  //         return
-  //             ListTile(
-  //           title: Text(item[index].itemEnglishName),
-  //           onTap: () {
-  //             insert();
-  //           },
-  //         );
-  //       });
-  // }
-}
+    //   ListView.builder(
+    //       itemCount: item.length,
+    //       itemBuilder: (contex, index) {
+    //         return
+    //             ListTile(
+    //           title: Text(item[index].itemEnglishName),
+    //           onTap: () {
+    //             insert();
+    //           },
+    //         );
+    //       });
+    // }
+  }
 
-Widget _buildBody(BuildContext context) {
-  return StreamBuilder<QuerySnapshot>(
-    stream: Firestore.instance.collection('itemList').snapshots(),
-    builder: (context, snapshot) {
-      if (!snapshot.hasData) return LinearProgressIndicator();
+  Widget _buildBody(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: Firestore.instance.collection('itemList').snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return LinearProgressIndicator();
 
-      return _buildList(context, snapshot.data.documents);
-    },
-  );
-}
+        return _buildList(context, snapshot.data.documents);
+      },
+    );
+  }
 
-Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
-  return ListView(
-    padding: const EdgeInsets.only(top: 20.0),
-    children: snapshot.map((data) => _buildListItem(context, data)).toList(),
-  );
-}
+  Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
+    return ListView(
+      padding: const EdgeInsets.only(top: 20.0),
+      children: snapshot.map((data) => _buildListItem(context, data)).toList(),
+    );
+  }
 
-Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
-  final listitems = ItemsFirebase.fromSnapshot(data);
+  Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
+    final listitems = ItemsFirebase.fromSnapshot(data);
 
-  return Padding(
-    // key: ValueKey(student.sname),
-    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-    child: Container(
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(5.0)),
-      child: ListTile(
-        leading: Text(listitems.itemEnglishName),
-        title: Text(listitems.itemMarathiName.toString() +'/'+ listitems.itemHindiName),
-        subtitle: Text( listitems.itemsQuantity.toString()+'\t'+listitems.itemsUnite ),
-        trailing: GestureDetector(
-          onTap: () {
-            print(data.documentID);
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => AddItemsPage(
-                          data: data,
-                        )));
+    return Padding(
+      // key: ValueKey(student.sname),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      child: Container(
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey),
+            borderRadius: BorderRadius.circular(5.0)),
+        child: InkWell(
+          onTap: (){
+            
+            // Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //         builder: (context) => EditItemPage(
+            //               data: data,
+            //             )));
           },
-          child: Icon(Icons.view_agenda),
+          child: ListTile(
+            leading: Text(listitems.itemEnglishName),
+            title: Text(listitems.itemMarathiName.toString() +
+                '/' +
+                listitems.itemHindiName),
+            subtitle: Text(listitems.itemsQuantity.toString() +
+                '\t' +
+                listitems.itemsUnite),
+                trailing: Text(listitems.itemPrice +' '+'Rs'),
+
+            // trailing: GestureDetector(
+            //   onTap: () {
+            //     print(data.documentID);
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //             builder: (context) => EditItemPage(
+            //                   data: data,
+            //                 )));
+            //   },
+            //   child: Icon(Icons.view_agenda),
+            // ),
+            onTap: () =>Navigator.push(context, MaterialPageRoute(builder: (context)=>EditItemPage(data: data,)))
+              // await transaction.update(student.reference, {'votes':fresh.votes +1});
+           // }),
+          ),
         ),
-        onTap: () => Firestore.instance.runTransaction((transaction) async {
-          final freshSnapshot = await transaction.get(listitems.reference);
-          final fresh = ItemsFirebase.fromSnapshot(freshSnapshot);
-          // await transaction.update(student.reference, {'votes':fresh.votes +1});
-        }),
       ),
-    ),
-  );
+    );
+  }
 }
-}
+//  Firestore.instance.runTransaction((transaction) async {
+//               final freshSnapshot = await transaction.get(listitems.reference);
+//               final fresh = ItemsFirebase.fromSnapshot(freshSnapshot);

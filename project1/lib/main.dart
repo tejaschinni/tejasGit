@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project1/addItemsPage.dart';
 import 'package:project1/authPage.dart';
 import 'package:project1/collectionDemo/addDataForCollection.dart';
 import 'package:project1/collectionDemo/listPage.dart';
