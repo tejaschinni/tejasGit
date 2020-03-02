@@ -2,6 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ShopOwner {
   final String shopname,shopownername,shopaddress,shopmobile,shoplicense;
+  final List itemEngName;
+  final List itemMarName;
+  final List itemHinName;
+  final List itemprice;
+  final List itemquantity;
+  final List itemunit;
   final DocumentReference reference;
   //final bool active;
 
@@ -15,7 +21,14 @@ class ShopOwner {
         shopownername = map['shopownername'],
         shopaddress = map['shopaddress'],
         shoplicense = map['shoplicense'],
-        shopmobile = map['shopmobile'];
+        shopmobile = map['shopmobile'],
+        itemEngName = map['itemEngName'],
+        itemMarName = map['itemMarName'],
+        itemHinName = map['itemHinName'],
+        itemprice = map['itemprice'],
+        itemquantity = map['itemquantity'],
+        itemunit = map['itemunit'];
+
 
 
   ShopOwner.fromSnapshot(DocumentSnapshot snapshot)

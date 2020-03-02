@@ -14,8 +14,9 @@ import 'package:project1/dashBoardPage.dart';
 class ConfirmPage extends StatefulWidget {
   final Function handleSignOut;
   final String documentPath;
+  final String documentPathOwner;
   final GoogleSignInAccount _currentUser;
-  ConfirmPage(this.handleSignOut, this._currentUser, this.documentPath);
+  ConfirmPage(this.handleSignOut, this._currentUser, this.documentPath,this.documentPathOwner);
   @override
   _ConfirmPageState createState() => _ConfirmPageState();
 }
@@ -28,7 +29,7 @@ class _ConfirmPageState extends State<ConfirmPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   String customerprofile;
-  String path;
+  
 
   @override
   void initState() {
@@ -39,7 +40,7 @@ class _ConfirmPageState extends State<ConfirmPage> {
           userEmail = user.email;
         }));
     setState(() {
-      path = '/ShopOwner/${userEmail.toString()}';
+     
      
      // print("------Doc Path------------" + widget.documentPath);
     });
@@ -75,36 +76,36 @@ class _ConfirmPageState extends State<ConfirmPage> {
   }
 
 
-  // void getShopOwnerEmail() {
-  //   setState(() {
-  //       print(path);
-  //       print(userEmail);
-  //     Firestore.instance
-  //         .document(widget.documentPath)
-  //         .get()
-  //         .then((DocumentSnapshot ds) {
-  //       if (ds.exists) {
-  //         print("__________true________________" + ds.documentID.toString());
-  //         Navigator.push(
-  //             context,
-  //             MaterialPageRoute(
-  //                 builder: (contex) => DashBoardPage(
-  //                     widget.handleSignOut,
-  //                     widget._currentUser)));
+  void getShopOwnerEmail() {
+    setState(() {
+        print(widget.documentPathOwner);
+        print(userEmail);
+      Firestore.instance
+          .document(widget.documentPathOwner)
+          .get()
+          .then((DocumentSnapshot ds) {
+        if (ds.exists) {
+          print("__________true________________" + ds.documentID.toString());
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (contex) => DashBoardPage(
+                      widget.handleSignOut,
+                      widget._currentUser)));
 
-  //       } else {
-  //         print("--Email Null--  " + ds.documentID.toString());
-  //         Navigator.push(
-  //             context,
-  //             MaterialPageRoute(
-  //                 builder: (context) => CreateShopOwner(
-  //                     widget.handleSignOut,
-  //                     widget._currentUser)));
+        } else {
+          print("--Email Null--  " + ds.documentID.toString());
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => CreateShopOwner(
+                      widget.handleSignOut,
+                      widget._currentUser)));
 
-  //       }
-  //     });
-  //   });
-  // }
+        }
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +189,7 @@ class _ConfirmPageState extends State<ConfirmPage> {
                         )),
                     onTap: () {
                       setState(() {
-                      //  getShopOwnerEmail();
+                       getShopOwnerEmail();
                       Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage(widget.handleSignOut, widget._currentUser)));
                       });
                     },

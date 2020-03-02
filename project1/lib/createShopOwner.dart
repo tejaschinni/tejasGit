@@ -11,6 +11,7 @@ import 'package:project1/authPage.dart';
 import 'package:project1/constant.dart';
 import 'package:project1/demo/demoPage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:project1/selectItemsList.dart';
 
 class CreateShopOwner extends StatefulWidget {
   final Function handleSignOut;
@@ -72,6 +73,7 @@ class _CreateShopOwnerState extends State<CreateShopOwner> {
         onTap: () {
           setState(() {
             insert();
+           // Navigator.push(context, MaterialPageRoute(builder: (contex)=>SelectItemPage(widget.handleSignOut, widget._currentUser)));
           });
         },
         child: Container(

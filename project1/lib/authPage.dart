@@ -19,7 +19,7 @@ class _AuthPageState extends State<AuthPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   String email = "";
-  String documentpath ;
+  String documentpath,documentPathOwner ;
   @override
   @override
   void initState() {
@@ -30,6 +30,7 @@ class _AuthPageState extends State<AuthPage> {
         email = account.email;
         print("________________"+email);
         documentpath = '/Customer/${email.toString()}';
+        documentPathOwner = '/ShopOwner/${email.toString()}';
       });
     });
     _googleSignIn.signInSilently();
@@ -48,7 +49,7 @@ class _AuthPageState extends State<AuthPage> {
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;
-      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>ConfirmPage(_handleSignOut,_currentUser,documentpath)));
+      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>ConfirmPage(_handleSignOut,_currentUser,documentpath,documentPathOwner)));
 
     final AuthCredential credential = GoogleAuthProvider.getCredential(
       accessToken: googleAuth.accessToken,

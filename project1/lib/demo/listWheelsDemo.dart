@@ -112,15 +112,7 @@ class _ListWheelsDemoState extends State<ListWheelsDemo> {
         magnification: 1.2,
         diameterRatio: 3,
         physics: FixedExtentScrollPhysics(),
-        children: studentName.map((student){
-          return Container(
-            child:ListTile(
-              leading:Text(student.toString()),
-              // title: Text(std.name),
-              // trailing: Text(std.marks.toString()),
-            ),
-          );
-        }).toList(),
+        children: list,
       ),
     );
   }

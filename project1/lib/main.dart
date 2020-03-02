@@ -12,6 +12,7 @@ import 'package:project1/customerList.dart';
 import 'package:project1/dashBoardPage.dart';
 import 'package:project1/demo/JsonDemo2Items.dart';
 import 'package:project1/demo/cardDemo.dart';
+import 'package:project1/demo/checkBoxArrayDemo.dart';
 import 'package:project1/demo/clippingToolDemo.dart';
 import 'package:project1/demo/jsonExample.dart';
 import 'package:project1/demo/jsonItemsDemo.dart';
@@ -23,6 +24,7 @@ import 'package:project1/listOfItemPage.dart';
 import 'package:project1/numberVerification.dart';
 import 'package:project1/orderPage.dart';
 import 'package:project1/orderViewPage.dart';
+import 'package:project1/selectItemsList.dart';
 
 void main() => runApp(MyApp());
 
@@ -36,7 +38,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-           home: AuthPage(),
+           home: SelectItemPage(),
     );
   }
 }

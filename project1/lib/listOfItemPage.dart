@@ -287,12 +287,6 @@ class ItemsList extends StatelessWidget {
         child: InkWell(
           onTap: (){
             
-            // Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //         builder: (context) => EditItemPage(
-            //               data: data,
-            //             )));
           },
           child: ListTile(
             leading: Text(listitems.itemEnglishName),
