@@ -3,31 +3,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ShopOwner {
   final String shopname,shopownername,shopaddress,shopmobile,shoplicense;
   final List itemEngName;
-  final List itemMarName;
-  final List itemHinName;
-  final List itemprice;
-  final List itemquantity;
-  final List itemunit;
+  final List avaiableitem;
+  
   final DocumentReference reference;
   //final bool active;
 
   ShopOwner.fromMap(Map<String, dynamic> map, {this.reference})
-      : assert(map['shopname'] != null),
-        assert(map['shopownername'] != null),
-        assert(map['shopaddress'] != null),
-        assert(map['shopmobile'] != null),
-        assert(map['shoplicense'] != null),
-        shopname = map['shopname'],
+      : 
+        shopname = map['Shopname'],
         shopownername = map['shopownername'],
         shopaddress = map['shopaddress'],
         shoplicense = map['shoplicense'],
         shopmobile = map['shopmobile'],
-        itemEngName = map['itemEngName'],
-        itemMarName = map['itemMarName'],
-        itemHinName = map['itemHinName'],
-        itemprice = map['itemprice'],
-        itemquantity = map['itemquantity'],
-        itemunit = map['itemunit'];
+        avaiableitem =map['items'],
+        itemEngName = map['itemEngName'];
 
 
 

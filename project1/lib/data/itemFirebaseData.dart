@@ -7,6 +7,7 @@ class ItemsFirebase{
   final String itemsUnite;
   final double itemsQuantity;
   final String itemPrice;
+  bool status;
   final DocumentReference reference;
 
 
@@ -23,6 +24,7 @@ class ItemsFirebase{
         itemMarathiName = map['itemMarathiName'],
         itemsUnite = map['itemsUnite'],
         itemsQuantity = map['itemsQuantity'],
+        status = true,
         itemPrice = map['itemPrice'];
 
 

@@ -5,11 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project1/authPage.dart';
 import 'package:project1/constant.dart';
-import 'package:project1/createProfile.dart';
-import 'package:project1/createShopOwner.dart';
-import 'package:project1/customer.dart';
-import 'package:project1/customerDashBoard.dart';
-import 'package:project1/dashBoardPage.dart';
+import 'package:project1/customer/createProfile.dart';
+import 'package:project1/customer/customerDashBoard.dart';
+import 'package:project1/owner/createShopOwner.dart';
+import 'package:project1/ownerDashBoard.dart';
 
 class ConfirmPage extends StatefulWidget {
   final Function handleSignOut;

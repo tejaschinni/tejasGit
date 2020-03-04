@@ -4,7 +4,7 @@ import 'package:project1/collectionDemo/studentCollectionDemo/addStudent.dart';
 import 'package:project1/collectionDemo/studentCollectionDemo/studentDate.dart';
 import 'package:project1/collectionDemo/studentCollectionDemo/studentView.dart';
 import 'package:project1/collectionDemo/studentCollectionDemo/studentedit.dart';
-import 'package:project1/itemFirebaseData.dart';
+import 'package:project1/data/itemFirebaseData.dart';
 
 class StudentList extends StatefulWidget {
   @override

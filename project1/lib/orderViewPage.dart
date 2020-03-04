@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:project1/orderDataType.dart';
-import 'package:project1/orderPage.dart';
 
 class OrderViewPage extends StatefulWidget {
   final OrderDataType orderDataType;

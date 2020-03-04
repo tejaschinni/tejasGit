@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:project1/addItemPage.dart';
-import 'package:project1/dashBoardPage.dart';
+import 'package:project1/data/itemFirebaseData.dart';
+import 'package:project1/editOwnerItem.dart';
+import 'package:project1/owner/editItemPage.dart';
+import 'package:project1/ownerDashBoard.dart';
 import 'package:project1/demo/menuIcons.dart';
 import 'package:http/http.dart' as http;
-import 'package:project1/editItemPage.dart';
-import 'package:project1/itemFirebaseData.dart';
 import 'package:project1/litemDataType.dart';
 
 class ListOfItemPage extends StatefulWidget {
@@ -284,36 +284,31 @@ class ItemsList extends StatelessWidget {
         decoration: BoxDecoration(
             border: Border.all(color: Colors.grey),
             borderRadius: BorderRadius.circular(5.0)),
-        child: InkWell(
-          onTap: (){
-            
-          },
-          child: ListTile(
-            leading: Text(listitems.itemEnglishName),
-            title: Text(listitems.itemMarathiName.toString() +
-                '/' +
-                listitems.itemHindiName),
-            subtitle: Text(listitems.itemsQuantity.toString() +
-                '\t' +
-                listitems.itemsUnite),
-                trailing: Text(listitems.itemPrice +' '+'Rs'),
+        child: ListTile(
+          leading: Text(listitems.itemEnglishName),
+          title: Text(listitems.itemMarathiName.toString() +
+              '/' +
+              listitems.itemHindiName),
+          subtitle: Text(listitems.itemsQuantity.toString() +
+              '\t' +
+              listitems.itemsUnite),
+              trailing: Text(listitems.itemPrice +' '+'Rs'),
 
-            // trailing: GestureDetector(
-            //   onTap: () {
-            //     print(data.documentID);
-            //     Navigator.push(
-            //         context,
-            //         MaterialPageRoute(
-            //             builder: (context) => EditItemPage(
-            //                   data: data,
-            //                 )));
-            //   },
-            //   child: Icon(Icons.view_agenda),
-            // ),
-            onTap: () =>Navigator.push(context, MaterialPageRoute(builder: (context)=>EditItemPage(data: data,)))
-              // await transaction.update(student.reference, {'votes':fresh.votes +1});
-           // }),
-          ),
+          // trailing: GestureDetector(
+          //   onTap: () {
+          //     print(data.documentID);
+          //     Navigator.push(
+          //         context,
+          //         MaterialPageRoute(
+          //             builder: (context) => EditItemPage(
+          //                   data: data,
+          //                 )));
+          //   },
+          //   child: Icon(Icons.view_agenda),
+          // ),
+          onTap: () =>Navigator.push(context, MaterialPageRoute(builder: (context)=>EditItemPage(data: data,)))
+            // await transaction.update(student.reference, {'votes':fresh.votes +1});
+         // }),
         ),
       ),
     );

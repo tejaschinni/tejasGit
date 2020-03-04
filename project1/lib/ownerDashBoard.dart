@@ -6,9 +6,11 @@ import 'package:project1/constant.dart';
 import 'package:project1/customerList.dart';
 import 'package:project1/demo/demoPage.dart';
 import 'package:project1/demo/menuIcons.dart';
-import 'package:project1/listOfItemPage.dart';
-import 'package:project1/orderPage.dart';
+import 'package:project1/owner/ownerItemList.dart';
+import 'package:project1/owner/ownerItemsAva.dart';
+import 'package:project1/ownerRequestPage.dart';
 import 'package:project1/profilePage.dart';
+import 'package:project1/shopOwner.dart';
 
 class DashBoardPage extends StatefulWidget {
   final Function handleSignOut;
@@ -195,7 +197,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ListOfItemPage(widget.handleSignOut,widget._currentUser)));
+                          builder: (context) => OwnerItemsAvaiable()));
                 });
               },
               child: Container(

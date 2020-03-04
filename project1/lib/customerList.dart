@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project1/customerDatatype.dart';
 import 'package:project1/customerDetailPage.dart';
-import 'package:project1/dashBoardPage.dart';
+import 'package:project1/ownerDashBoard.dart';
 import 'package:project1/demo/menuIcons.dart';
 
 import 'demo/demoPage.dart';

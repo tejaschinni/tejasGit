@@ -73,7 +73,7 @@ class _CreateShopOwnerState extends State<CreateShopOwner> {
         onTap: () {
           setState(() {
             insert();
-           // Navigator.push(context, MaterialPageRoute(builder: (contex)=>SelectItemPage(widget.handleSignOut, widget._currentUser)));
+           Navigator.push(context, MaterialPageRoute(builder: (contex)=>SelectItemPage(widget.handleSignOut, widget._currentUser)));
           });
         },
         child: Container(

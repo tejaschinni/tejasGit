@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:project1/dashBoardPage.dart';
+import 'package:project1/ownerDashBoard.dart';
 import 'package:project1/demo/menuIcons.dart';
 import 'package:project1/orderDataType.dart';
 import 'package:project1/orderViewPage.dart';

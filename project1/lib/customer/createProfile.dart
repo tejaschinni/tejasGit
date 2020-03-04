@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project1/constant.dart';
-import 'package:project1/dashBoardPage.dart';
+import 'package:project1/ownerDashboard.dart';
 import 'package:project1/demo/demo.dart';
 
 class CreateProfilePage extends StatefulWidget {

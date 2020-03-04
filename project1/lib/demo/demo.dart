@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project1/authPage.dart';
 import 'package:project1/constant.dart';
-import 'package:project1/customer.dart';
+import 'package:project1/data/customer.dart';
 
 class Demo extends StatefulWidget {
   final Function handleSignOut;

@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:project1/itemFirebaseData.dart';
-import 'package:project1/listOfItemPage.dart';
+import 'package:project1/data/itemFirebaseData.dart';
 import 'package:project1/litemDataType.dart';
 
 class EditItemPage extends StatefulWidget {

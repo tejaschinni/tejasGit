@@ -234,11 +234,6 @@ class _StudentEditState extends State<StudentEdit> {
         .collection('StudentCollection1')
         .document(widget.data.documentID)
         .updateData({
-      // 'm1': m1,
-      // 'm2': m2,
-      // 'm3': m3,
-      // 'total': total,
-      // 'per': per,
       'edu':temp,
     });
   }

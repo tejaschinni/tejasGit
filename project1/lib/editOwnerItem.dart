@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:project1/itemFirebaseData.dart';
-import 'package:project1/listOfItemPage.dart';
 import 'package:project1/litemDataType.dart';
 
 class AddItemPage extends StatefulWidget {
