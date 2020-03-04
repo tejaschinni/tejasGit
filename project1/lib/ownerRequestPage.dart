@@ -1,28 +1,84 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:project1/dashBoardPage.dart';
+import 'package:project1/ownerDashBoard.dart';
 import 'package:project1/demo/menuIcons.dart';
-import 'package:project1/litemDataType.dart';
+import 'package:project1/orderDataType.dart';
+import 'package:project1/orderViewPage.dart';
 
-class ListOfItemPage extends StatefulWidget {
+class OrderPage extends StatefulWidget {
   final Function handleSignOut;
   final GoogleSignInAccount _currentUser;
-  ListOfItemPage(this.handleSignOut,this._currentUser);
+  OrderPage(this.handleSignOut,this._currentUser);
   @override
-  _ListOfItemPageState createState() => _ListOfItemPageState();
+  _OrderPageState createState() => _OrderPageState();
 }
 
-class _ListOfItemPageState extends State<ListOfItemPage> {
+class _OrderPageState extends State<OrderPage> {
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
-  List<ItemDataType> itemList = List();
-
+  List<OrderDataType> orderList = List();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    itemList.add(ItemDataType(id: 2,name: 'namama',price: 39));
+    orderList.add(OrderDataType(
+        id: 1,
+        name: 'Tejas Chinni',
+              
+    ));
+    orderList.add(OrderDataType(
+        id: 2,
+        name: 'Sameer',
+        
+        
+    ));
+    orderList.add(OrderDataType(
+        id: 3,
+        name: 'Raj M',
+        
+        
+    ));
+    orderList.add(OrderDataType(
+        id: 4,
+        name: 'Sagar R',
+        
+        
+    ));
+    orderList.add(OrderDataType(
+        id: 5,
+        name: 'Mahesh S',
+        
+        
+    ));
+    orderList.add(OrderDataType(
+        id: 6,
+        name: 'Suraj',
+       
+    ));
+    orderList.add(OrderDataType(
+        id: 7,
+        name: 'Ramesh',
+        
+        
+    ));
+    orderList.add(OrderDataType(
+        id: 8,
+        name: 'Somesh ',
+        
+        
+    ));
+    orderList.add(OrderDataType(
+        id: 9,
+        name: 'Shubham C',
+        
+        
+    )); 
+    orderList.add(OrderDataType(
+        id: 10,
+        name: 'Rahul A',
+        
+        
+    ));   
   }
   @override
   Widget build(BuildContext context) {
@@ -30,19 +86,16 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
       key: _scaffoldkey,
       appBar: AppBar(
         backgroundColor: Colors.green,
-        title: Text('List Of Items'),
+        title: Text('Order'),
         actions: <Widget>[
           Container(
             margin: EdgeInsets.all(10),
-            child: Icon(
-              Icons.search,
-              size: 30,
-            ),
+            child: Icon(Icons.search,size: 30,),
           )
         ],
         leading: IconButton(
           icon: MenuIconsPage(),
-          onPressed: () => _scaffoldkey.currentState.openDrawer(),
+          onPressed: ()=> _scaffoldkey.currentState.openDrawer(),
         ),
       ),
       drawer: SafeArea(
@@ -79,10 +132,7 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
                             'Home',
                             style: TextStyle(color: Colors.white),
                           ),
-                          onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => DashBoardPage(widget.handleSignOut,widget._currentUser))),
+                          onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardPage(widget.handleSignOut,widget._currentUser))),
                         ),
                         ListTile(
                           leading: Icon(Icons.person, color: Colors.white),
@@ -90,10 +140,6 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
                             'Profile',
                             style: TextStyle(color: Colors.white),
                           ),
-                          onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => DashBoardPage(widget.handleSignOut,widget._currentUser))),
                         ),
                         ListTile(
                           leading: Icon(Icons.search, color: Colors.white),
@@ -101,10 +147,6 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
                             'Search',
                             style: TextStyle(color: Colors.white),
                           ),
-                          onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => DashBoardPage(widget.handleSignOut,widget._currentUser))),
                         ),
                         ListTile(
                           leading: Icon(Icons.history, color: Colors.white),
@@ -112,10 +154,6 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
                             'History',
                             style: TextStyle(color: Colors.white),
                           ),
-                          onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => DashBoardPage(widget.handleSignOut,widget._currentUser))),
                         ),
                         ListTile(
                           leading: Icon(Icons.payment, color: Colors.white),
@@ -123,10 +161,6 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
                             'Payment',
                             style: TextStyle(color: Colors.white),
                           ),
-                          onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => DashBoardPage(widget.handleSignOut,widget._currentUser))),
                         ),
                         ListTile(
                           leading: Icon(
@@ -137,10 +171,6 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
                             'Setting',
                             style: TextStyle(color: Colors.white),
                           ),
-                          onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => DashBoardPage(widget.handleSignOut,widget._currentUser))),
                         ),
                       ],
                     ),
@@ -153,49 +183,42 @@ class _ListOfItemPageState extends State<ListOfItemPage> {
       ),
       body: Center(
         child: Container(
-          child: ListView.builder(
-            itemCount: itemList.length,
-            itemBuilder: (context, index) {
-              return Center(
-                child: SizedBox(
-                  child: Container(
-                    decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                    child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: itemList.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.only(top: 5, left: 5, right: 5),
-                          decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(10),
-                            shape: BoxShape.rectangle,
-                          ),
-                          child: ListTile(
-                            leading: CircleAvatar(
-                              backgroundImage:
-                                  AssetImage('assets/wallpaper.jpg'),
-                            ),
-                            title: Text(itemList[index].name),
-                            trailing: Container(
-                              height: 25,
-                              width: 69,
-                              child:
-                                  Center(child: Text(itemList[index].price.toString())),
-                            ),
-                            onTap: () {},
-                          ),
-                        );
-                      },
-                    ),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+            child: ListView.builder(
+              itemCount: orderList.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  margin: EdgeInsets.only(top: 5, left: 5, right: 5),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.rectangle,
                   ),
-                ),
-              );
-            },
-          ),
-        ),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundImage: AssetImage('assets/wallpaper.jpg'),
+                    ),
+                    title: Text(orderList[index].name),
+                    subtitle: Text(orderList[index].price.toString()),
+                    trailing: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(10)
+                      ),
+                      height: 25,
+                      width: 69,
+                      child: Center(child: Text('View List')),
+                    ),
+                    onTap: () {
+                      setState(() {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderViewPage(orderDataType: orderList[index],)));
+                      });
+                    },
+                  ),
+                );
+              },
+            ),
+            ),
       ),
     );
   }

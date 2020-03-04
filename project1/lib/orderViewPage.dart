@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:project1/orderDataType.dart';
-import 'package:project1/orderPage.dart';
-
-import 'itemDatatype.dart';
 
 class OrderViewPage extends StatefulWidget {
   final OrderDataType orderDataType;
@@ -12,7 +9,7 @@ class OrderViewPage extends StatefulWidget {
 }
 
 class _OrderViewPageState extends State<OrderViewPage> {
-  List<ItemDataType> itemList = List();
+  //List<ItemDataType> itemList = List();
   bool boxvalue = false;
   TextEditingController nameController = TextEditingController();
   TextEditingController itemriceController = TextEditingController();
@@ -24,63 +21,63 @@ class _OrderViewPageState extends State<OrderViewPage> {
     super.initState();
     nameController.text = widget.orderDataType.name;
     itemNameController.text = widget.orderDataType.product;
-    setState(() {
-      itemList.add(ItemDataType(
-          itemName: 'Shugar',
-          itemQuantity: '2',
-          itemrice: '30',
-          itemUnite: 'kg'));
-      itemList.add(ItemDataType(
-          itemName: 'Rice',
-          itemQuantity: '2',
-          itemrice: '30',
-          itemUnite: 'kg'));
-      itemList.add(ItemDataType(
-          itemName: 'Dhal',
-          itemQuantity: '2',
-          itemrice: '30',
-          itemUnite: 'kg'));
-      itemList.add(ItemDataType(
-          itemName: 'Honey',
-          itemQuantity: '2',
-          itemrice: '30',
-          itemUnite: 'kg'));
-      itemList.add(ItemDataType(
-          itemName: 'Maggi',
-          itemQuantity: '2',
-          itemrice: '30',
-          itemUnite: 'kg'));
-      itemList.add(ItemDataType(
-          itemName: 'HandWash',
-          itemQuantity: '2',
-          itemrice: '30',
-          itemUnite: 'kg'));
-      itemList.add(ItemDataType(
-          itemName: 'Hair Oil',
-          itemQuantity: '2',
-          itemrice: '30',
-          itemUnite: 'kg'));
-      itemList.add(ItemDataType(
-          itemName: 'Shugar',
-          itemQuantity: '2',
-          itemrice: '30',
-          itemUnite: 'kg'));
-      itemList.add(ItemDataType(
-          itemName: 'Shugar',
-          itemQuantity: '2',
-          itemrice: '30',
-          itemUnite: 'kg'));
-      itemList.add(ItemDataType(
-          itemName: 'Shugar',
-          itemQuantity: '2',
-          itemrice: '30',
-          itemUnite: 'kg'));
-      itemList.add(ItemDataType(
-          itemName: 'Shugar',
-          itemQuantity: '2',
-          itemrice: '30',
-          itemUnite: 'kg'));
-    });
+    // setState(() {
+    //   itemList.add(ItemDataType(
+    //       itemName: 'Shugar',
+    //       itemQuantity: '2',
+    //       itemrice: '30',
+    //       itemUnite: 'kg'));
+    //   itemList.add(ItemDataType(
+    //       itemName: 'Rice',
+    //       itemQuantity: '2',
+    //       itemrice: '30',
+    //       itemUnite: 'kg'));
+    //   itemList.add(ItemDataType(
+    //       itemName: 'Dhal',
+    //       itemQuantity: '2',
+    //       itemrice: '30',
+    //       itemUnite: 'kg'));
+    //   itemList.add(ItemDataType(
+    //       itemName: 'Honey',
+    //       itemQuantity: '2',
+    //       itemrice: '30',
+    //       itemUnite: 'kg'));
+    //   itemList.add(ItemDataType(
+    //       itemName: 'Maggi',
+    //       itemQuantity: '2',
+    //       itemrice: '30',
+    //       itemUnite: 'kg'));
+    //   itemList.add(ItemDataType(
+    //       itemName: 'HandWash',
+    //       itemQuantity: '2',
+    //       itemrice: '30',
+    //       itemUnite: 'kg'));
+    //   itemList.add(ItemDataType(
+    //       itemName: 'Hair Oil',
+    //       itemQuantity: '2',
+    //       itemrice: '30',
+    //       itemUnite: 'kg'));
+    //   itemList.add(ItemDataType(
+    //       itemName: 'Shugar',
+    //       itemQuantity: '2',
+    //       itemrice: '30',
+    //       itemUnite: 'kg'));
+    //   itemList.add(ItemDataType(
+    //       itemName: 'Shugar',
+    //       itemQuantity: '2',
+    //       itemrice: '30',
+    //       itemUnite: 'kg'));
+    //   itemList.add(ItemDataType(
+    //       itemName: 'Shugar',
+    //       itemQuantity: '2',
+    //       itemrice: '30',
+    //       itemUnite: 'kg'));
+    //   itemList.add(ItemDataType(
+    //       itemName: 'Shugar',
+    //       itemQuantity: '2',
+    //       itemrice: '30',
+    //       itemUnite: 'kg'));
+    // });
   }
 
   @override
@@ -165,7 +162,7 @@ class _OrderViewPageState extends State<OrderViewPage> {
                 padding: EdgeInsets.only(top: 290),
                 margin: EdgeInsets.all(10),
                 child: ListView.builder(
-                  itemCount: itemList.length,
+                 // itemCount: itemList.length,
                   itemBuilder: (context, index) {
                     return Center(
                       child: Container(
@@ -183,7 +180,7 @@ class _OrderViewPageState extends State<OrderViewPage> {
                               margin: EdgeInsets.all(5),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20)),
-                              child: Text(itemList[index].itemName),
+                              child: Text('itemList[index].itemName'),
                             )),
                             Expanded(
                                 child: Container(
@@ -192,9 +189,7 @@ class _OrderViewPageState extends State<OrderViewPage> {
                               margin: EdgeInsets.all(5),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20)),
-                              child: Text(itemList[index].itemQuantity +
-                                  '\t' +
-                                  itemList[index].itemUnite),
+                              child: Text('itemList[index].itemQuantity +  + itemList[index].itemUnite'),
                             )),
                             Expanded(
                                 child: Container(

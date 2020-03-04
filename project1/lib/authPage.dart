@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:project1/loginPage.dart';
 import 'package:project1/constant.dart';
-import 'package:project1/dashBoardPage.dart';
+import 'package:project1/ownerDashBoard.dart';
 import 'package:project1/demo/demoPage.dart';
 
 GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -16,6 +17,9 @@ class _AuthPageState extends State<AuthPage> {
   GoogleSignInAccount _currentUser;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  String email = "";
+  String documentpath,documentPathOwner ;
   @override
   @override
   void initState() {
@@ -23,29 +27,29 @@ class _AuthPageState extends State<AuthPage> {
     _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
       setState(() {
         _currentUser = account;
+        email = account.email;
+        print("________________"+email);
+        documentpath = '/Customer/${email.toString()}';
+        documentPathOwner = '/ShopOwner/${email.toString()}';
       });
     });
     _googleSignIn.signInSilently();
-    if (_currentUser != null) {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  DashBoardPage(_handleSignOut, _currentUser)));
-    } else {
-      print('Log IN Failed');
-    }
+    // if (_currentUser != null) {
+    //   Navigator.pushReplacement(
+    //       context,
+    //       MaterialPageRoute(
+    //           builder: (context) =>
+    //               DashBoardPage(_handleSignOut, _currentUser)));
+    // } else {
+    //   // print('Log IN Failed');
+    // }
   }
 
   Future<FirebaseUser> _handleSignIn() async {
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;
-
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => DashBoardPage(_handleSignOut, _currentUser)));
+      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>ConfirmPage(_handleSignOut,_currentUser,documentpath,documentPathOwner)));
 
     final AuthCredential credential = GoogleAuthProvider.getCredential(
       accessToken: googleAuth.accessToken,
