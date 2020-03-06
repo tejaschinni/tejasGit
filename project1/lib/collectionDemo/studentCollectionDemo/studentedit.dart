@@ -102,11 +102,7 @@ class _StudentEditState extends State<StudentEdit> {
                 child: TextField(
                   textAlign: TextAlign.center,
                   controller: snameController,
-                  // onChanged: (String s) {
-                  //   setState(() {
-                  //     sname = s;
-                  //   });
-                  // },
+                  
                   decoration: InputDecoration(
                       hintText: 'Student Name',
                       border: OutlineInputBorder(

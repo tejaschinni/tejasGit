@@ -9,6 +9,7 @@ import 'package:project1/customer/createProfile.dart';
 import 'package:project1/customer/customerDashBoard.dart';
 import 'package:project1/owner/createShopOwner.dart';
 import 'package:project1/ownerDashBoard.dart';
+import 'package:project1/shopOwner.dart';
 
 class ConfirmPage extends StatefulWidget {
   final Function handleSignOut;
@@ -45,36 +46,36 @@ class _ConfirmPageState extends State<ConfirmPage> {
     });
   }
 
-  void getCustomerEmail() {
-    setState(() {
-      Firestore.instance
-          .document(widget.documentPath)
-          .get()
-          .then((DocumentSnapshot ds) {
-        if (ds.exists) {
-          print("__________true________________" + ds.documentID.toString());
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (contex) => CustomerDashBoard(
-                      widget.handleSignOut,
-                      widget._currentUser)));
+  // void getCustomerEmail() {
+  //   setState(() {
+  //     Firestore.instance
+  //         .document(widget.documentPath)
+  //         .get()
+  //         .then((DocumentSnapshot ds) {
+  //       if (ds.exists) {
+  //         print("__________true________________" + ds.documentID.toString());
+  //         Navigator.push(
+  //             context,
+  //             MaterialPageRoute(
+  //                 builder: (contex) => CustomerDashBoard(
+  //                     widget.handleSignOut,
+  //                     widget._currentUser)));
 
-        } else {
-          print("--Email Null--  " + ds.documentID.toString());
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => CreateProfilePage(
-                      widget.handleSignOut,
-                      widget._currentUser)));
+  //       } else {
+  //         print("--Email Null--  " + ds.documentID.toString());
+  //         Navigator.push(
+  //             context,
+  //             MaterialPageRoute(
+  //                 builder: (context) => CreateProfilePage(
+  //                     widget.handleSignOut,
+  //                     widget._currentUser)));
 
-        }
-      });
-    });
-  }
+  //       }
+  //     });
+  //   });
+  // }
 
-
+ShopOwner shopowner;
   void getShopOwnerEmail() {
     setState(() {
         print(widget.documentPathOwner);
@@ -83,6 +84,9 @@ class _ConfirmPageState extends State<ConfirmPage> {
           .document(widget.documentPathOwner)
           .get()
           .then((DocumentSnapshot ds) {
+           setState(() {
+             shopowner = ShopOwner.fromSnapshot(ds);
+           });
         if (ds.exists) {
           print("__________true________________" + ds.documentID.toString());
           Navigator.push(
@@ -152,7 +156,7 @@ class _ConfirmPageState extends State<ConfirmPage> {
                 children: <Widget>[
                   Container(
                     alignment: Alignment.center,
-                    child: Text("Select If your are Customer Or Shop Owner"),
+                    child: Text(shopowner.shopname),
                   ),
                   InkWell(
                     child: Card(
@@ -169,7 +173,7 @@ class _ConfirmPageState extends State<ConfirmPage> {
                           ),
                         )),
                     onTap: () {
-                      getCustomerEmail();
+                     // getCustomerEmail();
                     },
                   ),
                   InkWell(
