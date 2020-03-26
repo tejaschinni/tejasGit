@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:storeapp/demo/loginpage.dart';
+import 'package:storeapp/authPage.dart';
+import 'package:storeapp/owner/ownerDashBoard.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,7 +13,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: SignInDemo(),
+      home: OwnerDashBoard(),
     );
   }
 }
