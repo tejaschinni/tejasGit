@@ -29,7 +29,7 @@ class _AuthPageState extends State<AuthPage> {
         _currentUser = account;
         email = account.email;
         print("________________"+email);
-        documentpath = '/Customer/${email.toString()}';
+        documentpath = '';
         documentPathOwner = '/ShopOwner/${email.toString()}';
       });
     });
@@ -70,7 +70,11 @@ class _AuthPageState extends State<AuthPage> {
   //   }
   // }
 
-  Future<void> _handleSignOut() => _googleSignIn.disconnect();
+  Future<void> _handleSignOut(){
+    _googleSignIn.disconnect();
+    _auth.signOut();
+
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(

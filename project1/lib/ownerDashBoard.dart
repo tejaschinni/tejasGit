@@ -98,6 +98,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
             ),
           ),
               ),
+              Container(margin: EdgeInsets.all(10),child: Text(user.displayName))
               
         ],
         leading: IconButton(
@@ -197,7 +198,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => OwnerItemsAvaiable()));
+                          builder: (context) => OwnerItemsAvaiable(widget._currentUser)));
                 });
               },
               child: Container(
