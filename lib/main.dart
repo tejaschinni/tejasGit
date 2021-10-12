@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:hive/hive.dart';
 import 'package:hivedemo/data/dog.dart';
 import 'package:hivedemo/hiveDemoPage.dart';
+import 'package:hivedemo/viewHeviDemo.dart';
 import 'package:path_provider/path_provider.dart' as pathProvider;
 
 Future<void> main() async {
@@ -33,9 +35,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HiveDemoPage(),
+      home: ViewHiveDemo(),
     );
   }
 }

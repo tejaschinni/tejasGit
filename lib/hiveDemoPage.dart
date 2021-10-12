@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hivedemo/data/dog.dart';
+import 'package:hivedemo/viewHeviDemo.dart';
 
 class HiveDemoPage extends StatefulWidget {
   const HiveDemoPage({Key? key}) : super(key: key);
@@ -92,8 +93,11 @@ class _HiveDemoPageState extends State<HiveDemoPage> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {
-          addDog();
+        onPressed: () async {
+          await addDog();
+          print("Hive dmo");
+
+          Get.offAll(() => ViewHiveDemo());
         },
       ),
     );
